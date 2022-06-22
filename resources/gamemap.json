@@ -3,6 +3,6 @@
 {"name": "pompeii", "south": "trevi", "east": "rome", "north": "nothing", "west":  "nothing"},
 {"name": "trevi", "south": "cathedral", "east": "canals", "north":"pompeii", "west":  "nothing"},
 {"name": "cathedral", "north": "trevi", "east": "canals", "south":  "nothing", "west": "nothing"},
-{"name": "canals", "east": "almafi", "north": "rome", "west":"trevi", "south":"cathedral"},
+{"name": "canals", "east": "amalfi", "north": "rome", "west":"trevi", "south":"cathedral"},
 {"name": "amalfi", "west": "canals", "north": "tower", "south": "nothing", "east": "nothing"},
-{"name": "tower", "west":"rome", "south": "almafi", "north": "nothing", "east": "nothing"}]
+{"name": "tower", "west":"rome", "south": "amalfi", "north": "nothing", "east": "nothing"}]

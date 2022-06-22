@@ -2,7 +2,7 @@
 [
   {
     "command": "go",
-    "option": "direction(North, South, East, West",
+    "option": "direction(North, South, East, West)",
     "description": "to move"
   },
   {

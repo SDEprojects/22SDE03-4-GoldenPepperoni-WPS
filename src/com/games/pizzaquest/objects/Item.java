@@ -2,7 +2,6 @@ package com.games.pizzaquest.objects;
 
 public class Item {
     String name;
-
     String type;
     String room;
 
