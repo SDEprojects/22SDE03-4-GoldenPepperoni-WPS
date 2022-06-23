@@ -6,7 +6,7 @@ import com.games.pizzaquest.textparser.TextParser;
 import javax.swing.*;
 import java.util.*;
 
-abstract public class PizzaQuestApp {
+public class PizzaQuestApp {
 
         //scanner for the game
         static Scanner scanner = new Scanner(System.in);
@@ -16,7 +16,7 @@ abstract public class PizzaQuestApp {
 
         //track turn may be moved to player
         private static final int turns = CommandsParser.getTurns();
-        static final int END_OF_TURNS=10;
+        static final int END_OF_TURNS = 20;
         static final int WINNING_REPUTATION= 40;
         private static ArrayList<NonPlayerCharacter> npcList;
         private static Hashtable<String, Location> gameMap = Gamestate.hashNewMap(ExternalFileReader.getLocationListFromJson());
@@ -34,7 +34,7 @@ abstract public class PizzaQuestApp {
         private final boolean isGameOver = false;
 
 
-        public static void execute() {
+        public void execute() {
                 TextParser parser = new TextParser();
                 CommandsParser.setGameOver(false);
                 //temporary setting of description for npc
@@ -44,12 +44,15 @@ abstract public class PizzaQuestApp {
                 ExternalFileReader.GameTextGson();
                 itemsList = ExternalFileReader.getItemListFromJson();
                 addItemsToLocationMap(gameMap, itemsList);
-                ExternalFileReader.welcome();
+
+                String welcomeMsg = ExternalFileReader.welcome();
                 gamestate = new Gamestate(gameMap.get("naples"), player);
+                gameWindow = new GameWindow(gamestate);
+                gameWindow.getGameLabel().setText(welcomeMsg);
 
                 System.out.println(enterName());
                 while(turns < END_OF_TURNS) {
-                        GameWindow.createGameWindow(gamestate);
+                        //GameWindow(gamestate);
                         //send user input to parser to validate and return a List
                         //then runs logic in relation to the map, and list based on Noun Verb Relationship
 
