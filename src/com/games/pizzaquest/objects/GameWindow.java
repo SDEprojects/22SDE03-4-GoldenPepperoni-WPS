@@ -5,6 +5,8 @@ import com.games.pizzaquest.textparser.TextParser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 
 public class GameWindow {
@@ -22,11 +24,28 @@ public class GameWindow {
     private JLabel errorLabel;
 
     public GameWindow(Gamestate gamestate) {
-        frame = new JFrame("TextField Example");
+        frame = new JFrame("Golden Pepperoni Pizza");
         frame.setSize(640, 480);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entry = new JTextField("Enter command");
+        entry = new JTextField();
+        entry.setText("Enter Command");
+        // This code below helps with placeholder text
+        entry.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (entry.getText().equals("Enter Command")) {
+                    entry.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (entry.getText().equals("")) {
+                    entry.setText("Enter Command");
+                }
+            }
+        });
         entry.setBounds(10, frame.getHeight() - 70, 300, 20);
         entry.addActionListener(e -> processCommand(gamestate));
         frame.add(entry);
@@ -73,6 +92,10 @@ public class GameWindow {
         exitButton.setBackground(Color.DARK_GRAY);
         exitButton.setForeground(Color.WHITE);
         frame.add(exitButton);
+
+        // logo on top
+        ImageIcon logo = new ImageIcon("resources/roundPizza.jpg");
+        frame.setIconImage(logo.getImage());
 
         frame.setLayout(null);
         frame.setVisible(true);
