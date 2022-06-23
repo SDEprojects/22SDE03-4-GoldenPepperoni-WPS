@@ -1,0 +1,16 @@
+[
+    {"name":  "lemon", "type": "npc", "room": "rome"},
+    {"name":  "moped", "type":  "vehicle", "room":  "cathedral"},
+    {"name":  "espresso", "type":  "npc", "room":  "trevi"},
+    {"name":  "coin", "type":  "npc", "room":  "trevi"},
+    {"name":  "horse", "type":  "vehicle", "room":  "tower"},
+    {"name":  "coin", "type":  "npc", "room":  "canals"},
+    {"name":  "cannoli", "type":  "npc", "room":  "pompeii"},
+    {"name":  "cookbook", "type":  "npc", "room":  "pompeii"},
+    {"name":  "wine_glass", "type":  "npc", "room":  "naples"},
+    {"name":  "olive_oil", "type":  "npc", "room":  "naples"},
+    {"name":  "pizza_cutter", "type":  "npc", "room":  "naples"},
+    {"name":  "marble_sculpture", "type":  "static", "room":  "amalfi"}
+    ]
+
+

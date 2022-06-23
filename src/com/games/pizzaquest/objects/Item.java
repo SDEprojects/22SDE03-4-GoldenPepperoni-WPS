@@ -1,5 +1,7 @@
 package com.games.pizzaquest.objects;
 
+import java.awt.*;
+
 public class Item {
     String name;
     String type;

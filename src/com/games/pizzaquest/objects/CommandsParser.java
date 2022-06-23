@@ -2,6 +2,7 @@ package com.games.pizzaquest.objects;
 
 import com.games.pizzaquest.app.PizzaQuestApp;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -10,10 +11,15 @@ import java.util.Set;
 public class CommandsParser {
     private static int turns;
     private static int reputation;
+    private static GameWindow gameWindow;
+    private static Hashtable<String, Location> gameMap = Gamestate.getGameMap();
+    private static Player player = PizzaQuestApp.getPlayer();
+    private static List<Item> itemList = PizzaQuestApp.getItemsList();
+    private static Gamestate gamestate = PizzaQuestApp.getGamestate();
 
 
 
-    public static void processCommands(List<String> verbAndNounList, Hashtable<String, Location> gameMap, Player player, List<Item> itemList, Gamestate gamestate){
+    public static void processCommands(List<String> verbAndNounList, Gamestate gamestate, Player player){
         String noun = verbAndNounList.get(verbAndNounList.size()-1);
         String verb = verbAndNounList.get(0);
         String person= "";
@@ -38,6 +44,7 @@ public class CommandsParser {
                     System.out.println(nextLoc);
                     gamestate.setPlayerLocation(gameMap.get(nextLoc.toLowerCase()));
                     System.out.println();
+                    GameWindow.setLocationLabel(gamestate);
                     System.out.println(player.look(gamestate.getPlayerLocation()));
                     System.out.println();
 
@@ -102,7 +109,7 @@ public class CommandsParser {
                 ExternalFileReader.gameInstructions();
                 break;
             case "reset":
-                resetGame();
+                //resetGame();
                 break;
             default:
                 System.out.printf("I don't understand '%s'%n", verbAndNounList);
@@ -124,12 +131,12 @@ public class CommandsParser {
         return gameOver;
     }
 
-    private static void resetGame() {
-        PizzaQuestApp resetGame = new PizzaQuestApp();
-        setGameOver(true);
-        turns = 0;
-        resetGame.execute();
-    }
+//    private static void resetGame() {
+//        PizzaQuestApp resetGame = new PizzaQuestApp();
+//        setGameOver(true);
+//        turns = 0;
+//        resetGame.execute();
+//    }
 
     private static void talk(Gamestate gamestate, String noun) {
         Location playerLocation = gamestate.getPlayerLocation();
