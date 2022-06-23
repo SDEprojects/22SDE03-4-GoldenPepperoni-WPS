@@ -96,7 +96,7 @@ abstract public class ExternalFileReader {
             ex.printStackTrace();
         }
     }
-    public static void welcome() {
+    public static String welcome() {
         InputStream welcomeSplash = getFileFromResourceAsStream(bannerFilePath);
         StringBuilder textBuilder = new StringBuilder();
         try  (Reader reader = new BufferedReader(new InputStreamReader
@@ -105,10 +105,11 @@ abstract public class ExternalFileReader {
             while ((c = reader.read()) != -1) {
                 textBuilder.append((char) c);
             }
-            System.out.println(textBuilder);
+            return textBuilder.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return textBuilder.toString();
     }
 
     public static void gameInstructions() {

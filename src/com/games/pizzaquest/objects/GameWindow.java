@@ -7,24 +7,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-abstract public class GameWindow {
+public class GameWindow {
+    private final Font FIELD_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
     private static TextParser parser = new TextParser();
-    private static PizzaQuestApp app;
+    private PizzaQuestApp app;
 
-    private static JFrame frame;
-    private static JTextField entry;
-    private static JButton send;
-    private static JButton exitButton;
-    private static JTextArea gameText;
-    private static JTextArea locationText;
-    private static JTextArea inventoryText;
-    private static JLabel errorLabel;
+    private JFrame frame;
+    private JTextField entry;
+    private JButton send;
+    private JButton exitButton;
+    private JTextArea gameText;
+    private JTextArea locationText;
+    private JTextArea inventoryText;
+    private JLabel errorLabel;
 
-    public GameWindow(){
-
-    }
-
-    public static void createGameWindow(Gamestate gamestate) {
+    public GameWindow(Gamestate gamestate) {
         frame = new JFrame("TextField Example");
         frame.setSize(640, 480);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,21 +41,23 @@ abstract public class GameWindow {
         gameText.setEditable(false);
         gameText.setOpaque(false);
         gameText.setBorder(BorderFactory.createLineBorder(Color.black));
-        gameText.setBounds(10, 10, 300, 370);
+        gameText.setBounds(10, 10, 400, 370);
+        gameText.setFont(FIELD_FONT);
+        gameText.setLineWrap(true);
         frame.add(gameText);
 
         locationText = new JTextArea(setLocationLabel(gamestate));
         locationText.setEditable(false);
         locationText.setOpaque(false);
         locationText.setBorder(BorderFactory.createLineBorder(Color.black));
-        locationText.setBounds(320, 10, 300, 190);
+        locationText.setBounds(420, 10, 200, 190);
         frame.add(locationText);
 
         inventoryText = new JTextArea(String.valueOf(setInventoryLabel(gamestate)));
         inventoryText.setEditable(false);
         inventoryText.setOpaque(false);
         inventoryText.setBorder(BorderFactory.createLineBorder(Color.black));
-        inventoryText.setBounds(320, 210, 300, 190);
+        inventoryText.setBounds(420, 210, 200, 190);
         frame.add(inventoryText);
 
         errorLabel = new JLabel("Errors show here");
@@ -79,7 +78,7 @@ abstract public class GameWindow {
         frame.setVisible(true);
     }
 
-    private static void processCommand(Gamestate gamestate) {
+    private void processCommand(Gamestate gamestate) {
         gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
 
@@ -100,17 +99,17 @@ abstract public class GameWindow {
     }
 
 
-//    public JLabel getGameLabel() {
-//        return gameText;
-//    }
+    public JTextArea getGameLabel() {
+        return gameText;
+    }
 
-//    public JLabel getLocationLabel() {
-//        return locationText;
-//    }
+    public JTextArea getLocationLabel() {
+        return locationText;
+    }
 
-//    public JLabel getInventoryLabel() {
-//        return inventoryText;
-//    }
+    public JTextArea getInventoryLabel() {
+        return inventoryText;
+    }
 
     public JLabel getErrorLabel() {
         return errorLabel;
