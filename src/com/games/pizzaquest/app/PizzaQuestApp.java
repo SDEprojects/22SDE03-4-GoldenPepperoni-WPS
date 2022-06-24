@@ -19,8 +19,8 @@ public class PizzaQuestApp {
         static final int END_OF_TURNS = 20;
         static final int WINNING_REPUTATION= 40;
         private static ArrayList<NonPlayerCharacter> npcList;
-        private static Hashtable<String, Location> gameMap = Gamestate.hashNewMap(ExternalFileReader.getLocationListFromJson());
-        private static List<Item> itemsList;
+        private static final Hashtable<String, Location> gameMap = Gamestate.hashNewMap(ExternalFileReader.getLocationListFromJson());
+        private static final List<Item> itemsList = ExternalFileReader.getItemListFromJson();
         private static Gamestate gamestate;
         private static int reputation;
         public final List<String> itemList = List.of("pizza_cutter","olive_oil", "prosciutto", "wine_glass", "lemons", "coin", "ancient_pizza_cookbook", "moped", "cannoli", "marble_sculpture", "espresso");
@@ -42,7 +42,7 @@ public class PizzaQuestApp {
                 npcList = ExternalFileReader.NpcGson();
                 setNPC();
                 ExternalFileReader.GameTextGson();
-                itemsList = ExternalFileReader.getItemListFromJson();
+                //itemsList = ExternalFileReader.getItemListFromJson();
                 addItemsToLocationMap(gameMap, itemsList);
 
                 String welcomeMsg = ExternalFileReader.welcome();
@@ -56,7 +56,7 @@ public class PizzaQuestApp {
                         //send user input to parser to validate and return a List
                         //then runs logic in relation to the map, and list based on Noun Verb Relationship
 
-                        CommandsParser.processCommands(parser.parse(scanner.nextLine()), getGamestate(), Gamestate.getPlayer());
+                        CommandsParser.processCommands(parser.parse(scanner.nextLine()), gamestate, gamestate.getPlayer());
                         checkIfGameIsWon();
                         // Increment turns by 1
                         //Display player status including number of turns left
@@ -99,16 +99,6 @@ public class PizzaQuestApp {
                 });
         }
 
-
-//        public static Hashtable<String, Location> hashNewMap(List<Location> initialMap) {
-//                Hashtable<String, Location> newMap = new Hashtable<>();
-//                for(Location location: initialMap){
-//                        location.setItems(new ArrayList<>());
-//                        newMap.put(location.getName(), location);
-//                }
-//                return newMap;
-//        }
-
         public static void setNPC(){
                 String tempNPCLocation = "";
                 Location setNPCLocation= null;
@@ -127,5 +117,9 @@ public class PizzaQuestApp {
 
         public static Gamestate getGamestate() {
                 return gamestate;
+        }
+
+        public void setGamestate(Gamestate gamestate){
+                PizzaQuestApp.gamestate = gamestate;
         }
 }

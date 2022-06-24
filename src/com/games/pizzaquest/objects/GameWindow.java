@@ -7,21 +7,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameWindow {
+    private static final TextParser parser = new TextParser();
+    private static JTextArea gameText;
+    private static JTextArea locationText;
+    private static JTextArea inventoryText;
     private final Font FIELD_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
-    private static TextParser parser = new TextParser();
+    private final JFrame frame;
+    private final JTextField entry;
+    private final JButton send;
+    private final JButton exitButton;
+    private final JLabel errorLabel;
     private PizzaQuestApp app;
-
-    private JFrame frame;
-    private JTextField entry;
-    private JButton send;
-    private JButton exitButton;
-    private JTextArea gameText;
-    private JTextArea locationText;
-    private JTextArea inventoryText;
-    private JLabel errorLabel;
 
     public GameWindow(Gamestate gamestate) {
         frame = new JFrame("Golden Pepperoni Pizza");
@@ -82,7 +82,7 @@ public class GameWindow {
         errorLabel = new JLabel("Errors show here");
         errorLabel.setBackground(Color.RED);
         errorLabel.setOpaque(true);
-        errorLabel.setBounds(10, frame.getHeight()-95, 300, 20 );
+        errorLabel.setBounds(10, frame.getHeight() - 95, 300, 20);
         frame.add(errorLabel);
 
         exitButton = new JButton("Quit");
@@ -101,26 +101,22 @@ public class GameWindow {
         frame.setVisible(true);
     }
 
+    public static JTextArea getInventoryLabel() {
+        return inventoryText;
+    }
+
     private void processCommand(Gamestate gamestate) {
         gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
+        CommandsParser.processCommands(commandParsed, gamestate, gamestate.getPlayer());
+        getLocationLabel().setText(setLocationLabel(gamestate));
+        getInventoryLabel().setText(setInventoryLabel(gamestate));
 
-        if (commandParsed.get(0).equals("go")){
-            CommandsParser.processCommands(commandParsed, gamestate, Gamestate.getPlayer());
-            locationText.setText(setLocationLabel(gamestate));
 
-        }
-
-        if (entry.getText().isEmpty()) {
-            errorLabel.setVisible(true);
-        }
-        else {
-            errorLabel.setVisible(false);
-        }
+        errorLabel.setVisible(entry.getText().isEmpty());
 
         entry.setText(null);
     }
-
 
     public JTextArea getGameLabel() {
         return gameText;
@@ -130,23 +126,21 @@ public class GameWindow {
         return locationText;
     }
 
-    public JTextArea getInventoryLabel() {
-        return inventoryText;
-    }
-
     public JLabel getErrorLabel() {
         return errorLabel;
     }
 
-    public static String setLocationLabel(Gamestate gamestate) {
+    public String setLocationLabel(Gamestate gamestate) {
         return gamestate.getPlayerLocation().toString();
     }
 
-    public static StringBuilder setInventoryLabel(Gamestate gamestate) {
-        StringBuilder inventoryString = new StringBuilder();
-        inventoryString.append("Items in room: \n");
-        for (Item item : gamestate.getPlayerLocation().getItems()){
-            inventoryString.append("  " + item.getName() + "\n");
+    public String setInventoryLabel(Gamestate gamestate) {
+        String inventoryString = "Items in room: \n";
+
+        Location location = gamestate.getPlayerLocation();
+        ArrayList<Item> items = gamestate.getPlayerLocation().getItems();
+        for (Item item : gamestate.getPlayerLocation().getItems()) {
+            inventoryString = String.format(inventoryString + "  " + item.getName() + "\n");
         }
 
         return inventoryString;

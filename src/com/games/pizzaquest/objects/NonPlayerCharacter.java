@@ -72,7 +72,7 @@ public class NonPlayerCharacter implements PlayerInterface {
 
     private String npcDescription = "";
 
-    private HashMap<String, String> dialogue = new HashMap<String, String>();
+    private final HashMap<String, String> dialogue = new HashMap<String, String>();
 
 
     public void setDialogue(String quest) {
