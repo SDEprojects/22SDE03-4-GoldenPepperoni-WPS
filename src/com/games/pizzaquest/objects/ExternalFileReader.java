@@ -112,9 +112,9 @@ abstract public class ExternalFileReader {
         return textBuilder.toString();
     }
 
-    public static void gameInstructions() {
-        gameTexts.displayCommands();
+    public static String gameInstructions() {
 
+        return gameTexts.displayCommands();
     }
 
 }
