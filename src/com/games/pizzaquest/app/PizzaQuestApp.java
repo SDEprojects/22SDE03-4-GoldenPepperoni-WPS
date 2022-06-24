@@ -3,7 +3,6 @@ package com.games.pizzaquest.app;
 import com.games.pizzaquest.objects.*;
 import com.games.pizzaquest.textparser.TextParser;
 
-import javax.swing.*;
 import java.util.*;
 
 public class PizzaQuestApp {

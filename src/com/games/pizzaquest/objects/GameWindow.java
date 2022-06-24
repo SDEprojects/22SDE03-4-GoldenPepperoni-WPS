@@ -21,13 +21,71 @@ public class GameWindow {
     private final JButton send;
     private final JButton exitButton;
     private final JLabel errorLabel;
+    private final JPanel MainPanel;
+    private final JPanel TopRightPanel;
+    private final JPanel BottomRightPanel;
     private PizzaQuestApp app;
 
     public GameWindow(Gamestate gamestate) {
-        frame = new JFrame("Golden Pepperoni Pizza");
-        frame.setSize(640, 480);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Game text
+        gameText = new JTextArea("This is the game field");
+        gameText.setEditable(false);
+        gameText.setOpaque(false);
+        gameText.setBorder(BorderFactory.createLineBorder(Color.black));
+        gameText.setBounds(10, 10, 400, 370);
+        gameText.setFont(FIELD_FONT);
+        gameText.setLineWrap(true);
+        gameText.setWrapStyleWord(true); // wraps the word
 
+        // Location text
+        locationText = new JTextArea(setLocationLabel(gamestate));
+        locationText.setEditable(false);
+        locationText.setOpaque(false);
+        locationText.setBorder(BorderFactory.createLineBorder(Color.black));
+        locationText.setBounds(420, 10, 200, 190);
+
+        // Inventory text
+        inventoryText = new JTextArea(String.valueOf(setInventoryLabel(gamestate)));
+        inventoryText.setEditable(false);
+        inventoryText.setOpaque(false);
+        inventoryText.setBorder(BorderFactory.createLineBorder(Color.black));
+        inventoryText.setBounds(420, 210, 200, 190);
+
+        // Main Panel = Big Left Panel
+        MainPanel = new JPanel();
+        MainPanel.setBackground(Color.pink);
+        MainPanel.setBounds(0,0,410, 380);
+        MainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        MainPanel.setBackground(Color.cyan);
+        MainPanel.setLayout(new GridLayout(0,1));
+        MainPanel.add(gameText);
+
+        // Top Right Panel
+        TopRightPanel = new JPanel();
+        TopRightPanel.setBackground(Color.orange);
+        TopRightPanel.setBounds(410,0,230,200);
+        TopRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        TopRightPanel.setLayout(new GridLayout(0,1));
+        TopRightPanel.add(locationText);
+
+        // Bottom Right Panel
+        BottomRightPanel = new JPanel();
+        BottomRightPanel.setBackground(Color.orange);
+        BottomRightPanel.setBounds(410,200,230,180);
+        BottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        BottomRightPanel.setLayout(new GridLayout(0,1));
+        BottomRightPanel.add(inventoryText);
+
+        // Frame
+        frame = new JFrame("Golden Pepperoni Pizza");
+        frame.setSize(654, 488);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false); // prevents resizing the window
+        frame.add(MainPanel);
+        frame.add(TopRightPanel);
+        frame.add(BottomRightPanel);
+
+        // User entry
         entry = new JTextField();
         entry.setText("Enter Command");
         // This code below helps with placeholder text
@@ -56,29 +114,6 @@ public class GameWindow {
         send.addActionListener(e -> processCommand(gamestate));
         frame.add(send);
 
-        gameText = new JTextArea("This is the game field");
-        gameText.setEditable(false);
-        gameText.setOpaque(false);
-        gameText.setBorder(BorderFactory.createLineBorder(Color.black));
-        gameText.setBounds(10, 10, 400, 370);
-        gameText.setFont(FIELD_FONT);
-        gameText.setLineWrap(true);
-        frame.add(gameText);
-
-        locationText = new JTextArea(setLocationLabel(gamestate));
-        locationText.setEditable(false);
-        locationText.setOpaque(false);
-        locationText.setBorder(BorderFactory.createLineBorder(Color.black));
-        locationText.setBounds(420, 10, 200, 190);
-        frame.add(locationText);
-
-        inventoryText = new JTextArea(String.valueOf(setInventoryLabel(gamestate)));
-        inventoryText.setEditable(false);
-        inventoryText.setOpaque(false);
-        inventoryText.setBorder(BorderFactory.createLineBorder(Color.black));
-        inventoryText.setBounds(420, 210, 200, 190);
-        frame.add(inventoryText);
-
         errorLabel = new JLabel("Errors show here");
         errorLabel.setBackground(Color.RED);
         errorLabel.setOpaque(true);
@@ -96,6 +131,9 @@ public class GameWindow {
         // logo on top
         ImageIcon logo = new ImageIcon("resources/roundPizza.jpg");
         frame.setIconImage(logo.getImage());
+
+        // Added background color
+        frame.getContentPane().setBackground(new Color(Color.pink.getRGB()));
 
         frame.setLayout(null);
         frame.setVisible(true);
