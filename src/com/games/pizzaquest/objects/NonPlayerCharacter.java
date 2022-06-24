@@ -3,13 +3,13 @@ package com.games.pizzaquest.objects;
 import java.util.HashMap;
 
 public class NonPlayerCharacter implements PlayerInterface {
-    private String name = "";
+    private final HashMap<String, String> dialogue = new HashMap<String, String>();
     Boolean isQuestActive = false;
+    private String name = "";
     private String npcLocation = "";
     private int repToGive = 0;
-
-
     private String requiredQuestItemString = "";
+    private String npcDescription = "";
 
     public NonPlayerCharacter(
             String name, String dialog, String npcLocation, String description, String reputation, String questItem
@@ -45,9 +45,12 @@ public class NonPlayerCharacter implements PlayerInterface {
         return sendRep;
     }
 
-
     public String getNpcLocation() {
         return npcLocation;
+    }
+
+    public void setNpcLocation(String npcLocation) {
+        this.npcLocation = npcLocation;
     }
 
     public String getRequiredQuestItemString() {
@@ -58,10 +61,6 @@ public class NonPlayerCharacter implements PlayerInterface {
         this.requiredQuestItemString = requiredQuestItemString;
     }
 
-    public void setNpcLocation(String npcLocation) {
-        this.npcLocation = npcLocation;
-    }
-
     public String getNpcDescription() {
         return npcDescription;
     }
@@ -69,11 +68,6 @@ public class NonPlayerCharacter implements PlayerInterface {
     public void setNpcDescription(String npcDescription) {
         this.npcDescription = npcDescription;
     }
-
-    private String npcDescription = "";
-
-    private final HashMap<String, String> dialogue = new HashMap<String, String>();
-
 
     public void setDialogue(String quest) {
         dialogue.put("quest", quest);
@@ -85,13 +79,13 @@ public class NonPlayerCharacter implements PlayerInterface {
     }
 
     @Override
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     @Override
-    public String getName() {
-        return name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

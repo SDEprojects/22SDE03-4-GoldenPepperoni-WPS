@@ -1,4 +1,5 @@
 package com.games.pizzaquest.client;
+
 import com.games.pizzaquest.app.PizzaQuestApp;
 
 public class PizzaClient {

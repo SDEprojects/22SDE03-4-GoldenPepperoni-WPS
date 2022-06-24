@@ -12,14 +12,11 @@ public class SoundHandler {
             Clip clip = AudioSystem.getClip();
             clip.open(inputStream);
             clip.loop(0);
-        }
-        catch (UnsupportedAudioFileException e) {
+        } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (LineUnavailableException e) {
+        } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
     }

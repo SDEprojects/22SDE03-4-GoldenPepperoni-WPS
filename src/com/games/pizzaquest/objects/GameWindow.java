@@ -146,7 +146,7 @@ public class GameWindow {
     private void processCommand(Gamestate gamestate) {
         gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
-        CommandsParser.processCommands(commandParsed, gamestate, gamestate.getPlayer());
+        CommandsParser.processCommands(commandParsed, gamestate);
         getLocationLabel().setText(setLocationLabel(gamestate));
         getInventoryLabel().setText(setInventoryLabel(gamestate));
 
@@ -175,8 +175,6 @@ public class GameWindow {
     public String setInventoryLabel(Gamestate gamestate) {
         String inventoryString = "Items in room: \n";
 
-        Location location = gamestate.getPlayerLocation();
-        ArrayList<Item> items = gamestate.getPlayerLocation().getItems();
         for (Item item : gamestate.getPlayerLocation().getItems()) {
             inventoryString = String.format(inventoryString + "  " + item.getName() + "\n");
         }

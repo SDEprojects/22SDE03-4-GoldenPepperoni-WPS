@@ -1,34 +1,34 @@
-{"texts":
-[
-  {
-    "command": "go",
-    "option": "direction(North, South, East, West)",
-    "description": "to move"
-  },
-  {
-    "command": "take",
-    "option": "item",
-    "description": "to retrieve an item and add to inventory"
-  },
-  {
-    "command": "look",
-    "option": "",
-    "description": "to describe your location or item in room"
-  },
-  {
-    "command": "inventory",
-    "option": "",
-    "description": "to see items you currently have"
-  },
-  {
-    "command": "give",
-    "option": "item",
-    "description": "to remove item from inventory"
-  },
-  {
-    "command": "quit",
-    "option": "",
-    "description": "to exit/quit the game"
-  }
-]
+{
+  "texts": [
+    {
+      "command": "go",
+      "option": "direction(North, South, East, West)",
+      "description": "to move"
+    },
+    {
+      "command": "take",
+      "option": "item",
+      "description": "to retrieve an item and add to inventory"
+    },
+    {
+      "command": "look",
+      "option": "",
+      "description": "to describe your location or item in room"
+    },
+    {
+      "command": "inventory",
+      "option": "",
+      "description": "to see items you currently have"
+    },
+    {
+      "command": "give",
+      "option": "item",
+      "description": "to remove item from inventory"
+    },
+    {
+      "command": "quit",
+      "option": "",
+      "description": "to exit/quit the game"
+    }
+  ]
 }
