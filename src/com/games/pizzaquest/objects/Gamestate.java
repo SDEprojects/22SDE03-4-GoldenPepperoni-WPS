@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Gamestate {
     private Location playerLocation;
-    private static Player player;
-    private static Hashtable<String, Location> gameMap = hashNewMap(ExternalFileReader.getLocationListFromJson());
+    private Player player;
+    private final Hashtable<String, Location> gameMap = hashNewMap(ExternalFileReader.getLocationListFromJson());
 
 
     public Gamestate(Location playerLocation){
@@ -20,11 +20,11 @@ public class Gamestate {
     }
 
     public Location getPlayerLocation() {
-        return this.playerLocation;
+        return playerLocation;
     }
 
-    public void setPlayerLocation(Location playerLocation){
-        this.playerLocation = playerLocation;
+    public void setPlayerLocation(Location newPlayerLocation){
+        this.playerLocation = newPlayerLocation;
     }
     public static Hashtable<String, Location> hashNewMap(List<Location> initialMap) {
         Hashtable<String, Location> newMap = new Hashtable<>();
@@ -35,11 +35,11 @@ public class Gamestate {
         return newMap;
     }
 
-    public static Hashtable<String, Location> getGameMap() {
+    public Hashtable<String, Location> getGameMap() {
         return gameMap;
     }
 
-    public static Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 }

@@ -5,10 +5,10 @@ import java.util.*;
 public class Location {
     private final String name;
     public NonPlayerCharacter npc = null;
-    private String north;
-    private String east;
-    private String south;
-    private String west;
+    private final String north;
+    private final String east;
+    private final String south;
+    private final String west;
     private ArrayList<Item> items;
 
     public void setItems(ArrayList<Item> items) {

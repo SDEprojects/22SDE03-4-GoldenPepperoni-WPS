@@ -11,13 +11,7 @@ import java.util.Set;
 public class CommandsParser {
     private static int turns;
     private static int reputation;
-    private static GameWindow gameWindow;
-    private static Hashtable<String, Location> gameMap = Gamestate.getGameMap();
-    private static Player player = PizzaQuestApp.getPlayer();
-    private static List<Item> itemList = PizzaQuestApp.getItemsList();
-    private static Gamestate gamestate = PizzaQuestApp.getGamestate();
-
-
+    private static final List<Item> itemList = ExternalFileReader.getItemListFromJson();
 
     public static void processCommands(List<String> verbAndNounList, Gamestate gamestate, Player player){
         String noun = verbAndNounList.get(verbAndNounList.size()-1);
@@ -42,9 +36,9 @@ public class CommandsParser {
                 System.out.println();
                 if(!nextLoc.equals("nothing")){
                     System.out.println(nextLoc);
-                    gamestate.setPlayerLocation(gameMap.get(nextLoc.toLowerCase()));
+                    gamestate.setPlayerLocation(PizzaQuestApp.getGameMap().get(nextLoc.toLowerCase()));
                     System.out.println();
-                    GameWindow.setLocationLabel(gamestate);
+
                     System.out.println(player.look(gamestate.getPlayerLocation()));
                     System.out.println();
 
@@ -86,7 +80,7 @@ public class CommandsParser {
                 break;
             case "talk":
                 //add item to inventory
-                talk(gamestate,noun);
+                talk(PizzaQuestApp.getGamestate(),noun);
                 break;
             case "give":
                 //removes item from inventory

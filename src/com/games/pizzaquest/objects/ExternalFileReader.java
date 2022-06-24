@@ -22,8 +22,8 @@ abstract public class ExternalFileReader {
 
     private static GameTexts gameTexts;
     private static List<Location> locationList;
-    private static Type locationListType = new TypeToken<ArrayList<Location>>(){}.getType();
-    private static Type itemListType = new TypeToken<List<Item>>(){}.getType();
+    private static final Type locationListType = new TypeToken<ArrayList<Location>>(){}.getType();
+    private static final Type itemListType = new TypeToken<List<Item>>(){}.getType();
 
     private static InputStream getFileFromResourceAsStream(String fileName) {
         ClassLoader classLoader = PizzaQuestApp.class.getClassLoader();
@@ -41,7 +41,7 @@ abstract public class ExternalFileReader {
         ArrayList<NonPlayerCharacter> npcList = new ArrayList<>();
         InputStream npcJSON = getFileFromResourceAsStream(npcFilePath);
         // convert JSON file to map
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(npcJSON, "UTF-8"))){
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(npcJSON, StandardCharsets.UTF_8))){
             Map<String, ArrayList<String>> map = gson.fromJson(reader, Map.class);
             for (Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
                 ArrayList<String> JSONnpc = map.get(entry.getKey());
@@ -58,7 +58,7 @@ abstract public class ExternalFileReader {
         ArrayList<Location> locationList = new ArrayList<>();
         Gson gson = new Gson();
         InputStream locationJSON = getFileFromResourceAsStream(locationFilePath);
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, "UTF-8"))){
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, StandardCharsets.UTF_8))){
             locationList = gson.fromJson(reader, locationListType);
         }
         catch(Exception e){
@@ -72,7 +72,7 @@ abstract public class ExternalFileReader {
         ArrayList<Item> itemsList = new ArrayList<>();
         Gson gson = new Gson();
         InputStream locationJSON = getFileFromResourceAsStream(itemFilePath);
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, "UTF-8"))){
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, StandardCharsets.UTF_8))){
             itemsList = gson.fromJson(reader, itemListType);
         }
         catch (IOException e) {
@@ -85,7 +85,7 @@ abstract public class ExternalFileReader {
     public static void GameTextGson() {
         Gson gson = new Gson();
         InputStream locationJSON = getFileFromResourceAsStream(textFilePath);
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, "UTF-8"))){
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, StandardCharsets.UTF_8))){
             // create Gson instance
 
             // convert JSON file to GameTexts Object which contains the GameText
