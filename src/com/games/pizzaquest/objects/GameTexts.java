@@ -17,12 +17,11 @@ public class GameTexts {
     public void displayCommands() {
         System.out.println("You must use the following commands to navigate: ");
         System.out.println();
-        for (GameText gt: texts) {
-           gt.printHelp();
+        for (GameText gt : texts) {
+            gt.printHelp();
             System.out.println();
         }
     }
-
 
 
     private static class GameText {
@@ -56,7 +55,7 @@ public class GameTexts {
         }
 
         public void printHelp() {
-            String help = "\"" + command +  translateOption() + "\" " + description + ".";
+            String help = "\"" + command + translateOption() + "\" " + description + ".";
             System.out.println(help);
 
 
