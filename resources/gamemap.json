@@ -30,7 +30,7 @@
   {
     "name": "cathedral",
     "north": "trevi",
-    "east": "canals",
+    "east": "nothing",
     "south": "nothing",
     "west": "nothing"
   },
@@ -39,7 +39,7 @@
     "east": "amalfi",
     "north": "rome",
     "west": "trevi",
-    "south": "cathedral"
+    "south": "nothing"
   },
   {
     "name": "amalfi",
