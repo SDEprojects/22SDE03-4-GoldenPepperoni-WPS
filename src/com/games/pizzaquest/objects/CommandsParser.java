@@ -34,6 +34,7 @@ public class CommandsParser {
                 if (!nextLoc.equals("nothing")) {
                     System.out.println(nextLoc);
                     gamestate.setPlayerLocation(PizzaQuestApp.getGameMap().get(nextLoc.toLowerCase()));
+
                     System.out.println();
                     System.out.println(gamestate.getPlayer().look(gamestate.getPlayerLocation()));
                     System.out.println();
@@ -74,7 +75,7 @@ public class CommandsParser {
                 break;
             case "talk":
                 //add item to inventory
-                talk(PizzaQuestApp.getGamestate(), noun);
+                talk(gamestate, noun);
                 break;
             case "give":
                 //removes item from inventory
@@ -127,13 +128,15 @@ public class CommandsParser {
 //        resetGame.execute();
 //    }
 
-    private static void talk(Gamestate gamestate, String noun) {
+    public static String talk(Gamestate gamestate, String noun) {
         Location playerLocation = gamestate.getPlayerLocation();
         if (playerLocation.npc != null && playerLocation.npc.getName().equals(noun)) {
             System.out.println(playerLocation.npc.giveQuest());
-        } else {
-            System.out.println("That player many not be in in this room or even exist!");
+            return playerLocation.npc.giveQuest();
         }
+
+        return "That player many not be in in this room or even exist!";
+
     }
 
 }

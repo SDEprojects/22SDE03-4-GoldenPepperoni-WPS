@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class GameWindow {
     private static final TextParser parser = new TextParser();
@@ -54,7 +54,7 @@ public class GameWindow {
         // Main Panel = Big Left Panel
         MainPanel = new JPanel();
         MainPanel.setBackground(Color.pink);
-        MainPanel.setBounds(0,0,410, 380);
+        MainPanel.setBounds(5,0,410, 500);
         MainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         MainPanel.setBackground(Color.cyan);
         MainPanel.setLayout(new GridLayout(0,1));
@@ -63,7 +63,7 @@ public class GameWindow {
         // Top Right Panel
         TopRightPanel = new JPanel();
         TopRightPanel.setBackground(Color.orange);
-        TopRightPanel.setBounds(410,0,230,200);
+        TopRightPanel.setBounds(420,0,230,250);
         TopRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         TopRightPanel.setLayout(new GridLayout(0,1));
         TopRightPanel.add(locationText);
@@ -71,14 +71,14 @@ public class GameWindow {
         // Bottom Right Panel
         BottomRightPanel = new JPanel();
         BottomRightPanel.setBackground(Color.orange);
-        BottomRightPanel.setBounds(410,200,230,180);
+        BottomRightPanel.setBounds(420,255,230,245);
         BottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         BottomRightPanel.setLayout(new GridLayout(0,1));
         BottomRightPanel.add(inventoryText);
 
         // Frame
         frame = new JFrame("Golden Pepperoni Pizza");
-        frame.setSize(654, 488);
+        frame.setSize(654, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false); // prevents resizing the window
         frame.add(MainPanel);
@@ -105,13 +105,13 @@ public class GameWindow {
             }
         });
         entry.setBounds(10, frame.getHeight() - 70, 300, 20);
-        entry.addActionListener(e -> processCommand(gamestate));
+        entry.addActionListener(e -> sendCommand(gamestate));
         frame.add(entry);
 
         send = new JButton("Send");
         send.setBounds(entry.getX() + entry.getWidth() + 10, frame.getHeight() - 70, 60, 20);
         send.setMargin(new Insets(2, 2, 3, 2));
-        send.addActionListener(e -> processCommand(gamestate));
+        send.addActionListener(e -> sendCommand(gamestate));
         frame.add(send);
 
         errorLabel = new JLabel("Errors show here");
@@ -143,12 +143,27 @@ public class GameWindow {
         return inventoryText;
     }
 
-    private void processCommand(Gamestate gamestate) {
+    private void sendCommand(Gamestate gamestate) {
         gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
         CommandsParser.processCommands(commandParsed, gamestate);
         getLocationLabel().setText(setLocationLabel(gamestate));
         getInventoryLabel().setText(setInventoryLabel(gamestate));
+
+        switch (commandParsed.get(0)){
+            case "help":
+                String instructions = ExternalFileReader.gameInstructions();
+                getGameLabel().setText(instructions);
+                break;
+            case "talk":
+                getGameLabel().setText(CommandsParser.talk(gamestate, commandParsed.get(1)));
+            case "look":
+                getGameLabel().setText(gamestate.getPlayer().look(new Item(commandParsed.get(1)).getDescription()));
+        }
+        if (commandParsed.get(0).equals("help")){
+            String instructions = ExternalFileReader.gameInstructions();
+            getGameLabel().setText(instructions);
+        }
 
 
         errorLabel.setVisible(entry.getText().isEmpty());
@@ -173,13 +188,20 @@ public class GameWindow {
     }
 
     public String setInventoryLabel(Gamestate gamestate) {
-        String inventoryString = "Items in room: \n";
+        StringBuilder inventoryString = new StringBuilder("Items in inventory: \n");
 
-        for (Item item : gamestate.getPlayerLocation().getItems()) {
-            inventoryString = String.format(inventoryString + "  " + item.getName() + "\n");
+        Set<Item> playerItems = gamestate.getPlayer().getInventory();
+
+        if (playerItems.isEmpty()){
+            inventoryString.append("  EMPTY");
+        }
+        else {
+            for (Item item : playerItems) {
+                inventoryString.append("  ").append(item.getName()).append("\n");
+            }
         }
 
-        return inventoryString;
+        return inventoryString.toString();
     }
 
 }

@@ -14,13 +14,17 @@ public class GameTexts {
     }
 
     // Create a method that will print all the GameText in the ArrayList
-    public void displayCommands() {
+    public String displayCommands() {
         System.out.println("You must use the following commands to navigate: ");
         System.out.println();
+        StringBuilder commands = new StringBuilder();
+        commands.append("\t\t\tGAME HELP\n---------------------------------------------------------\n");
         for (GameText gt : texts) {
-            gt.printHelp();
+            commands.append(gt.printHelp());
             System.out.println();
         }
+        commands.append("---------------------------------------------------------");
+        return commands.toString();
     }
 
 
@@ -54,11 +58,10 @@ public class GameTexts {
             this.description = description;
         }
 
-        public void printHelp() {
-            String help = "\"" + command + translateOption() + "\" " + description + ".";
+        public String printHelp() {
+            String help = "\"" + command + translateOption() + "\" " + description + ".\n\n";
             System.out.println(help);
-
-
+            return help;
         }
 
         private String translateOption() {

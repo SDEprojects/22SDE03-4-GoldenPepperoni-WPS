@@ -99,8 +99,8 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location: " + getName() + ".\n\nExits:" + printBoarders() + "\n" + printItems() +
-                (npc != null ? npc.getName() + " is standing in the room" : "there is no one in the room");
+        return "Location: " + getName() + ".\n\nExits:" + printBoarders() + "\n" + printItems() + "\n" +
+                (npc != null ? npc.getName() + " is in the room" : "There is no one in the room");
     }
 
 
