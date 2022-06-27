@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 public class CommandsParser {
-    private static final List<Item> itemList = ExternalFileReader.getItemListFromJson();
+    private static final ArrayList<Item> itemList = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
     private static int turns;
     private static int reputation;
 
-    public static boolean processCommands(List<String> verbAndNounList, Gamestate gamestate) {
+    public static boolean processCommands(List<String> verbAndNounList, Gamestate gamestate, GameWindow window) {
         boolean validCommand = true;
         String noun = verbAndNounList.get(verbAndNounList.size() - 1);
         String verb = verbAndNounList.get(0);
@@ -52,29 +52,34 @@ public class CommandsParser {
                 //will need a item list and a location list
                 //todo - check size and get last
                 //if room, do the first, else if item, do the second
+
+                Item item;
                 if (noun.equals("")) {
                     validCommand = false;
                     break;
-                }
-                if (itemList.contains(noun)) {
-                    System.out.println(gamestate.getPlayer().look(new Item(noun)));
-                } else if (gamestate.getPlayerLocation().npc != null && gamestate.getPlayerLocation().npc.getName().equals(noun)) {
-                    System.out.println(gamestate.getPlayerLocation().npc.getNpcDescription());
                 } else {
-                    System.out.println(gamestate.getPlayer().look(gamestate.getPlayerLocation()));
+                    item = ExternalFileReader.getSingleItem(noun);
+                }
+
+                if (itemList.contains(item)) {
+                    window.getGameLabel().setText(item.getDescription());
+                } else if (gamestate.getPlayerLocation().npc != null && gamestate.getPlayerLocation().npc.getName().equals(noun)) {
+                    window.getGameLabel().setText(gamestate.getPlayerLocation().npc.getNpcDescription());
+                } else {
+                    window.getGameLabel().setText(gamestate.getPlayer().look(gamestate.getPlayerLocation()));
                 }
                 break;
             case "take":
                 boolean itemFound = false;
                 //add item to inventory
-                for (Item item : gamestate.getPlayerLocation().getItems()) {
-                    if (item.getName().equals(noun)) {
+                for (Item i : gamestate.getPlayerLocation().getItems()) {
+                    if (i.getName().equals(noun)) {
                         gamestate.getPlayer().addToInventory(noun);
                         itemFound = true;
                     }
                 }
 
-                gamestate.getPlayerLocation().getItems().removeIf(item -> item.getName().equals(noun));
+                gamestate.getPlayerLocation().getItems().removeIf(i -> i.getName().equals(noun));
                 System.out.println("Player inventory: " + gamestate.getPlayer().getInventory());
                 System.out.println("Items in location: " + gamestate.getPlayerLocation().getItems());
                 if (!itemFound) {
@@ -84,6 +89,7 @@ public class CommandsParser {
             case "talk":
                 //add item to inventory
                 talk(gamestate, noun);
+                window.getGameLabel().setText(CommandsParser.talk(gamestate, verbAndNounList.get(1)));
                 break;
             case "give":
                 //removes item from inventory
@@ -99,12 +105,12 @@ public class CommandsParser {
             case "inventory":
                 Set<Item> tempInventory = gamestate.getPlayer().getInventory();
                 System.out.println("Items in the Inventory");
-                for (Item item : tempInventory) {
-                    System.out.println(item.getName());
+                for (Item i : tempInventory) {
+                    System.out.println(i.getName());
                 }
                 break;
             case "help":
-                ExternalFileReader.gameInstructions();
+                window.getGameLabel().setText(ExternalFileReader.gameInstructions());
                 break;
             case "reset":
                 //resetGame();

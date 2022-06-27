@@ -81,6 +81,19 @@ abstract public class ExternalFileReader {
         return itemsList;
     }
 
+    public static Item getSingleItem(String itemName) {
+        ArrayList<Item> itemsList = (ArrayList<Item>) getItemListFromJson();
+        Item foundItem = null;
+
+        for (Item i : itemsList) {
+            if (i.getName().equals(itemName)) {
+                foundItem = i;
+            }
+        }
+
+        return foundItem;
+    }
+
     public static void GameTextGson() {
         Gson gson = new Gson();
         InputStream locationJSON = getFileFromResourceAsStream(textFilePath);
