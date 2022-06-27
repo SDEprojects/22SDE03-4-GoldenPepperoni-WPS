@@ -43,12 +43,6 @@ public class PizzaQuestApp {
         }
     }
 
-    private static String enterName() {
-        System.out.println("Please enter your name: ");
-        String playerName = scanner.nextLine();
-        return ("Ciao " + playerName + " you are in " + gamestate.getPlayerLocation());
-    }
-
     public static void addItemsToLocationMap(Hashtable<String, Location> gameMap, List<Item> itemsList) {
         itemsList.forEach(item -> {
             gameMap.get(item.getRoom().toLowerCase()).getItems().add(item);
@@ -96,7 +90,6 @@ public class PizzaQuestApp {
         gameWindow = new GameWindow(gamestate);
         gameWindow.getGameLabel().setText(welcomeMsg);
 
-        System.out.println(enterName());
         while (turns < END_OF_TURNS) {
             //GameWindow(gamestate);
             //send user input to parser to validate and return a List

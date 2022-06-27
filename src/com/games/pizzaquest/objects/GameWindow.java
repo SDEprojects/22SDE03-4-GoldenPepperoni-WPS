@@ -114,10 +114,11 @@ public class GameWindow {
         send.addActionListener(e -> sendCommand(gamestate));
         frame.add(send);
 
-        errorLabel = new JLabel("Errors show here");
+        errorLabel = new JLabel("Invalid command");
         errorLabel.setBackground(Color.RED);
         errorLabel.setOpaque(true);
         errorLabel.setBounds(10, frame.getHeight() - 95, 300, 20);
+        errorLabel.setVisible(false);
         frame.add(errorLabel);
 
         exitButton = new JButton("Quit");
@@ -146,7 +147,7 @@ public class GameWindow {
     private void sendCommand(Gamestate gamestate) {
         gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
-        CommandsParser.processCommands(commandParsed, gamestate);
+        errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate));
         getLocationLabel().setText(setLocationLabel(gamestate));
         getInventoryLabel().setText(setInventoryLabel(gamestate));
 
@@ -164,9 +165,6 @@ public class GameWindow {
             String instructions = ExternalFileReader.gameInstructions();
             getGameLabel().setText(instructions);
         }
-
-
-        errorLabel.setVisible(entry.getText().isEmpty());
 
         entry.setText(null);
     }
