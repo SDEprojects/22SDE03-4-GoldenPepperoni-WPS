@@ -28,6 +28,23 @@ public class PizzaQuestApp {
     private final boolean isGameOver = false;
     private GameWindow gameWindow;
 
+    public void execute() {
+        TextParser parser = new TextParser();
+        CommandsParser.setGameOver(false);
+        //temporary setting of description for npc
+        //temporarily put in a 1 iteration loop to test user input
+        npcList = ExternalFileReader.NpcGson();
+        setNPC();
+        ExternalFileReader.GameTextGson();
+        //itemsList = ExternalFileReader.getItemListFromJson();
+        addItemsToLocationMap(gameMap, itemsList);
+
+        String welcomeMsg = ExternalFileReader.welcome();
+        gamestate = new Gamestate(gameMap.get("naples"), player);
+        gameWindow = new GameWindow(gamestate);
+        gameWindow.getGameLabel().setText(welcomeMsg);
+    }
+
     public static List<Item> getItemsList() {
         return itemsList;
     }
@@ -74,39 +91,7 @@ public class PizzaQuestApp {
         PizzaQuestApp.gamestate = gamestate;
     }
 
-    public void execute() {
-        TextParser parser = new TextParser();
-        CommandsParser.setGameOver(false);
-        //temporary setting of description for npc
-        //temporarily put in a 1 iteration loop to test user input
-        npcList = ExternalFileReader.NpcGson();
-        setNPC();
-        ExternalFileReader.GameTextGson();
-        //itemsList = ExternalFileReader.getItemListFromJson();
-        addItemsToLocationMap(gameMap, itemsList);
 
-        String welcomeMsg = ExternalFileReader.welcome();
-        gamestate = new Gamestate(gameMap.get("naples"), player);
-        gameWindow = new GameWindow(gamestate);
-        gameWindow.getGameLabel().setText(welcomeMsg);
-
-        while (turns < END_OF_TURNS) {
-            //GameWindow(gamestate);
-            //send user input to parser to validate and return a List
-            //then runs logic in relation to the map, and list based on Noun Verb Relationship
-
-            CommandsParser.processCommands(parser.parse(scanner.nextLine()), gamestate);
-            checkIfGameIsWon();
-            // Increment turns by 1
-            //Display player status including number of turns left
-            int turnsLeft = END_OF_TURNS - CommandsParser.getTurns();
-            System.out.println("It's day " + CommandsParser.getTurns() + ". You have " + turnsLeft + " days left.");
-            //Players reputation is displayed whenever status is updated
-            System.out.println("Your reputation is " + reputation);
-
-        }
-        CommandsParser.quitGame();
-    }
 
     public boolean isGameOver() {
         return isGameOver;

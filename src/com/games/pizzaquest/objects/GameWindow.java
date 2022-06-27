@@ -147,24 +147,9 @@ public class GameWindow {
     private void sendCommand(Gamestate gamestate) {
         gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
-        errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate));
+        errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, this));
         getLocationLabel().setText(setLocationLabel(gamestate));
         getInventoryLabel().setText(setInventoryLabel(gamestate));
-
-        switch (commandParsed.get(0)){
-            case "help":
-                String instructions = ExternalFileReader.gameInstructions();
-                getGameLabel().setText(instructions);
-                break;
-            case "talk":
-                getGameLabel().setText(CommandsParser.talk(gamestate, commandParsed.get(1)));
-            case "look":
-                getGameLabel().setText(gamestate.getPlayer().look(new Item(commandParsed.get(1)).getDescription()));
-        }
-        if (commandParsed.get(0).equals("help")){
-            String instructions = ExternalFileReader.gameInstructions();
-            getGameLabel().setText(instructions);
-        }
 
         entry.setText(null);
     }
