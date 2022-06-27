@@ -4,55 +4,63 @@
     "north": "nothing",
     "east": "nothing",
     "south": "rome",
-    "west": "nothing"
+    "west": "nothing",
+    "description": "PLACE HOLDER TEXT"
   },
   {
     "name": "rome",
     "east": "tower",
     "west": "pompeii",
     "north": "naples",
-    "south": "canals"
+    "south": "canals",
+    "description": "PLACE HOLDER TEXT"
   },
   {
     "name": "pompeii",
     "south": "trevi",
     "east": "rome",
     "north": "nothing",
-    "west": "nothing"
+    "west": "nothing",
+    "description": "PLACE HOLDER TEXT"
   },
   {
     "name": "trevi",
     "south": "cathedral",
     "east": "canals",
     "north": "pompeii",
-    "west": "nothing"
+    "west": "nothing",
+    "description": "PLACE HOLDER TEXT"
   },
   {
     "name": "cathedral",
     "north": "trevi",
     "east": "nothing",
     "south": "nothing",
-    "west": "nothing"
+    "west": "nothing",
+    "description": "PLACE HOLDER TEXT"
   },
   {
     "name": "canals",
     "east": "amalfi",
     "north": "rome",
     "west": "trevi",
-    "south": "nothing"
+    "south": "nothing",
+    "description": "PLACE HOLDER TEXT"
   },
   {
     "name": "amalfi",
     "west": "canals",
     "north": "tower",
     "south": "nothing",
-    "east": "nothing"
+    "east": "nothing",
+    "description": "PLACE HOLDER TEXT"
   },
   {
     "name": "tower",
     "west": "rome",
     "south": "amalfi",
     "north": "nothing",
-    "east": "nothing"
+    "east": "nothing",
+    "description": "PLACE HOLDER TEXT"
   }
 ]

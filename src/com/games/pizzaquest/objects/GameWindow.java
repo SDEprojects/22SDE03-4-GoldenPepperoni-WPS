@@ -105,13 +105,13 @@ public class GameWindow {
             }
         });
         entry.setBounds(10, frame.getHeight() - 70, 300, 20);
-        entry.addActionListener(e -> sendCommand(gamestate));
+        entry.addActionListener(e -> sendCommand(gamestate, this));
         frame.add(entry);
 
         send = new JButton("Send");
         send.setBounds(entry.getX() + entry.getWidth() + 10, frame.getHeight() - 70, 60, 20);
         send.setMargin(new Insets(2, 2, 3, 2));
-        send.addActionListener(e -> sendCommand(gamestate));
+        send.addActionListener(e -> sendCommand(gamestate, this));
         frame.add(send);
 
         errorLabel = new JLabel("Invalid command");
@@ -144,10 +144,10 @@ public class GameWindow {
         return inventoryText;
     }
 
-    private void sendCommand(Gamestate gamestate) {
+    private void sendCommand(Gamestate gamestate, GameWindow gameWindow) {
         gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
-        errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, this));
+        errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, gameWindow));
         getLocationLabel().setText(setLocationLabel(gamestate));
         getInventoryLabel().setText(setInventoryLabel(gamestate));
 

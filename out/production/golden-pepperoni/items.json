@@ -3,73 +3,73 @@
     "name": "lemon",
     "type": "npc",
     "room": "rome",
-    "description": "Yellow fruit. It smells of citrus. Tart but when the game devs give you one of these, make lemonade"
+    "description": "\n\n Yellow fruit. It smells of citrus. Tart but when the game devs give you one of these, make lemonade"
   },
   {
     "name": "moped",
     "type": "vehicle",
     "room": "cathedral",
-    "description": "Part motorcycle, part bicycle, pure Italy"
+    "description": "\n\n Part motorcycle, part bicycle, pure Italy"
   },
   {
     "name": "espresso",
     "type": "npc",
     "room": "trevi",
-    "description": "THIS STUFF WILL GIVE YOU ALL THE ENERGY!! AHHHHHHHHHHHHHHHHHHHHH!!!!!"
+    "description": "\n\n THIS STUFF WILL GIVE YOU ALL THE ENERGY!! AHHHHHHHHHHHHHHHHHHHHH!!!!!"
   },
   {
     "name": "coin",
     "type": "npc",
     "room": "trevi",
-    "description": "Shiny money. Some people enjoy throwing them into fountains. Maybe someone in the game??"
+    "description": "\n\n Shiny money. Some people enjoy throwing them into fountains. Maybe someone in the game??"
   },
   {
     "name": "horse",
     "type": "vehicle",
     "room": "tower",
-    "description": ""
+    "description": "\n\n Four legged animal. Likes carrots. Giddy up!"
   },
   {
     "name": "coin",
     "type": "npc",
     "room": "canals",
-    "description": ""
+    "description": "\n\n Shiny money. Some people enjoy throwing them into fountains. Maybe someone in the game??"
   },
   {
     "name": "cannoli",
     "type": "npc",
     "room": "pompeii",
-    "description": ""
+    "description": "\n\n Italian dessert. Kind of like a burrito but filled with cream and other sweets."
   },
   {
     "name": "cookbook",
     "type": "npc",
     "room": "pompeii",
-    "description": ""
+    "description": "\n\n Instructions to cook things. Contains many Italian Dishes"
   },
   {
-    "name": "wine_glass",
+    "name": "wine glass",
     "type": "npc",
     "room": "naples",
-    "description": "Lets get lit"
+    "description": "\n A glass used to hold wine.\n Hold it by the stem and swirl the wine to seem more\n sophisticated."
   },
   {
-    "name": "olive_oil",
+    "name": "olive oil",
     "type": "npc",
     "room": "naples",
-    "description": ""
+    "description": "\n\n Oil made from olives. Ingredient used in many dishes."
   },
   {
-    "name": "pizza_cutter",
+    "name": "pizza cutter",
     "type": "npc",
     "room": "naples",
-    "description": ""
+    "description": "\n\n Cuts pizza into slices."
   },
   {
-    "name": "marble_sculpture",
+    "name": "marble sculpture",
     "type": "static",
     "room": "amalfi",
-    "description": ""
+    "description": "\n\n Look at it. Beautiful sculpture of whatever your mind desires. Use your imagination!"
   }
 ]
 

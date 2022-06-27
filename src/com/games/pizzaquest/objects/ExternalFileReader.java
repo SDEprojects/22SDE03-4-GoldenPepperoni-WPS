@@ -8,9 +8,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 abstract public class ExternalFileReader {
 
@@ -23,10 +21,12 @@ abstract public class ExternalFileReader {
     }.getType();
     private static final Type itemListType = new TypeToken<List<Item>>() {
     }.getType();
+    private static final Type synonymListType = new TypeToken<Map<String,ArrayList<String>>>() {
+    }.getType();
     private static GameTexts gameTexts;
     private static List<Location> locationList;
 
-    private static InputStream getFileFromResourceAsStream(String fileName) {
+    public static InputStream getFileFromResourceAsStream(String fileName) {
         ClassLoader classLoader = PizzaQuestApp.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(fileName);
         if (inputStream == null) {
@@ -66,6 +66,19 @@ abstract public class ExternalFileReader {
         }
 
         return locationList;
+    }
+
+    public static Map<String,ArrayList<String>> getSynonymListFromJson() {
+        Map<String,ArrayList<String>> synonymList = new HashMap<>();
+        Gson gson = new Gson();
+        InputStream locationJSON = getFileFromResourceAsStream("synonyms.json");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, StandardCharsets.UTF_8))) {
+            synonymList = gson.fromJson(reader, synonymListType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return synonymList;
     }
 
     public static List<Item> getItemListFromJson() {
