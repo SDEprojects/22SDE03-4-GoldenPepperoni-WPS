@@ -1,0 +1,9 @@
+{
+  "go": ["move","travel","walk","ride","drive"],
+  "take": ["pick up", "grab", "obtain"],
+  "look": ["inspect"],
+  "give": [],
+  "help": [],
+  "quit": ["close", "exit"],
+  "talk": ["talk to", "speak", "speak to"]
+}
