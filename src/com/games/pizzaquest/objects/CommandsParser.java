@@ -11,7 +11,8 @@ public class CommandsParser {
     private static int turns;
     private static int reputation;
 
-    public static void processCommands(List<String> verbAndNounList, Gamestate gamestate) {
+    public static boolean processCommands(List<String> verbAndNounList, Gamestate gamestate) {
+        boolean validCommand = true;
         String noun = verbAndNounList.get(verbAndNounList.size() - 1);
         String verb = verbAndNounList.get(0);
         ArrayList<String> validDirections = new ArrayList<>();
@@ -26,6 +27,7 @@ public class CommandsParser {
                 break;
             case "go":
                 if (noun.equals("") || !validDirections.contains(noun)) {
+                    validCommand = false;
                     break;
                 }
 
@@ -51,6 +53,7 @@ public class CommandsParser {
                 //todo - check size and get last
                 //if room, do the first, else if item, do the second
                 if (noun.equals("")) {
+                    validCommand = false;
                     break;
                 }
                 if (itemList.contains(noun)) {
@@ -62,16 +65,21 @@ public class CommandsParser {
                 }
                 break;
             case "take":
+                boolean itemFound = false;
                 //add item to inventory
                 for (Item item : gamestate.getPlayerLocation().getItems()) {
                     if (item.getName().equals(noun)) {
                         gamestate.getPlayer().addToInventory(noun);
+                        itemFound = true;
                     }
                 }
 
                 gamestate.getPlayerLocation().getItems().removeIf(item -> item.getName().equals(noun));
                 System.out.println("Player inventory: " + gamestate.getPlayer().getInventory());
                 System.out.println("Items in location: " + gamestate.getPlayerLocation().getItems());
+                if (!itemFound) {
+                    validCommand = false;
+                }
                 break;
             case "talk":
                 //add item to inventory
@@ -80,6 +88,7 @@ public class CommandsParser {
             case "give":
                 //removes item from inventory
                 if (noun.equals("")) {
+                    validCommand = false;
                     break;
                 }
                 if (gamestate.getPlayerLocation().npc != null) {
@@ -103,8 +112,10 @@ public class CommandsParser {
             default:
                 System.out.printf("I don't understand '%s'%n", verbAndNounList);
                 System.out.println("Type help if you need some guidance on command structure!");
+                validCommand = false;
                 break;
         }
+        return validCommand;
     }
 
     public static int getTurns() {
