@@ -5,5 +5,7 @@
   "give": [],
   "help": [],
   "quit": ["close", "exit"],
-  "talk": ["talk to", "speak", "speak to"]
+  "talk": ["talk to", "speak", "speak to"],
+  "mute": ["sound off", "music off"],
+  "unmute": ["sound on", "music on"]
 }

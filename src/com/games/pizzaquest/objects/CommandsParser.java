@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static com.games.pizzaquest.objects.MusicPlayer.playMusic;
+import static com.games.pizzaquest.objects.MusicPlayer.stopMusic;
+
 public class CommandsParser {
     private static final ArrayList<Item> itemList = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
     private static int turns;
@@ -114,6 +117,12 @@ public class CommandsParser {
                 break;
             case "reset":
                 //resetGame();
+                break;
+            case "mute":
+                stopMusic();
+                break;
+            case "unmute":
+                playMusic();
                 break;
             default:
                 System.out.printf("I don't understand '%s'%n", verbAndNounList);
