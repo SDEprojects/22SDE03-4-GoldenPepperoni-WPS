@@ -26,10 +26,6 @@ public class NonPlayerCharacter implements PlayerInterface {
         setRequiredQuestItemString(questItem);
     }
 
-    public int getRepToGive() {
-        return repToGive;
-    }
-
     public void setRepToGive(int repToGive) {
         this.repToGive = repToGive;
     }
@@ -37,7 +33,7 @@ public class NonPlayerCharacter implements PlayerInterface {
     public int processItem(String item) {
         int sendRep = 0;
         if (item.equals(getRequiredQuestItemString())) {
-            sendRep = getRepToGive();
+            sendRep = repToGive;
             System.out.println("Congratulations you have received " + sendRep + " reputation from " + getName());
         } else {
             System.out.println("You gave the " + item + " to " + getName() + ". Unfortunately he took that item but it not what they were looking for :(");
