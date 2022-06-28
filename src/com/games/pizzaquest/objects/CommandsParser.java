@@ -98,7 +98,7 @@ public class CommandsParser {
                     break;
                 }
                 if (gamestate.getPlayerLocation().npc != null) {
-                    reputation = gamestate.getPlayerLocation().npc.processItem(noun);
+                    reputation += gamestate.getPlayerLocation().npc.processItem(noun);
                 }
                 gamestate.getPlayer().removeFromInventory(noun);
                 break;
@@ -121,22 +121,14 @@ public class CommandsParser {
                 validCommand = false;
                 break;
         }
+        // Make a gameover check after the command is processed.
         gamestate.checkGameOver(turns, reputation);
         return validCommand;
     }
 
-    public static int getTurns() {
-        return turns;
-    }
-
     public static void quitGame() {
         System.out.println("You'll always have a pizza our heart ... Goodbye!");
-        setGameOver(true);
         System.exit(0);
-    }
-
-    public static boolean setGameOver(boolean gameOver) {
-        return gameOver;
     }
 
 //    private static void resetGame() {
