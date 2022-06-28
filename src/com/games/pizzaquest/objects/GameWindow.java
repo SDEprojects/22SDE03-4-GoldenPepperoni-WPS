@@ -27,6 +27,7 @@ public class GameWindow {
     private final JPanel BottomRightPanel;
     private PizzaQuestApp app;
     ImageIcon logo = new ImageIcon("roundPizza.jpg");
+
 //    ImageIcon mapPicture;
 //    JLabel mapLabel;
 
