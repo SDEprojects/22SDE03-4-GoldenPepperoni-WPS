@@ -5,9 +5,12 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class Gamestate {
+    private final int WINNING_REPUTATION = 100;
+    private final int TURN_LIMIT = 15;
     private final Hashtable<String, Location> gameMap = hashNewMap(ExternalFileReader.getLocationListFromJson());
     private Location playerLocation;
     private Player player;
+    private int gameOver = 0;
 
 
     public Gamestate(Location playerLocation) {
@@ -28,6 +31,15 @@ public class Gamestate {
         return newMap;
     }
 
+    public void checkGameOver(int turns, int reputation) {
+        if (turns > TURN_LIMIT) {
+            this.gameOver = -1;
+        }
+        else if (reputation >= WINNING_REPUTATION) {
+            this.gameOver = 1;
+        }
+    }
+
     public Location getPlayerLocation() {
         return playerLocation;
     }
@@ -42,5 +54,9 @@ public class Gamestate {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public int getGameOver() {
+        return gameOver;
     }
 }
