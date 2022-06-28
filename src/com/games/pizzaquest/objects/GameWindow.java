@@ -20,12 +20,13 @@ public class GameWindow {
     private final JTextField entry;
     private final JButton send;
     private final JButton exitButton;
+    private final JButton mapButton;
     private final JLabel errorLabel;
     private final JPanel MainPanel;
     private final JPanel TopRightPanel;
     private final JPanel BottomRightPanel;
     private PizzaQuestApp app;
-    ImageIcon logo = new ImageIcon("resources/roundPizza.jpg");
+    ImageIcon logo = new ImageIcon("./resources/roundPizza.jpg");
 //    ImageIcon mapPicture;
 //    JLabel mapLabel;
 
@@ -126,7 +127,7 @@ public class GameWindow {
         frame.add(errorLabel);
 
         // Map button
-        JButton mapButton = new JButton("Map");
+        mapButton = new JButton("Map");
         mapButton.setBounds(frame.getWidth()-120, frame.getHeight()-70, 40, 20);
         mapButton.setMargin((new Insets(2, 2, 3, 2)));
         mapButton.setBackground(Color.darkGray);
@@ -160,7 +161,8 @@ public class GameWindow {
         JLabel mapLabel = new JLabel();
 
         mapLabel.setIcon(mapPicture);
-        JFrame mapFrame = new JFrame("Game Map");
+        JDialog mapFrame = new JDialog();
+        mapFrame.setModal(true);
 
         mapFrame.add(mapLabel);
         mapFrame.pack();
