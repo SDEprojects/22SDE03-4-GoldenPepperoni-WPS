@@ -150,7 +150,7 @@ public class GameWindow {
         errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, gameWindow));
         getLocationLabel().setText(setLocationLabel(gamestate));
         getInventoryLabel().setText(setInventoryLabel(gamestate));
-
+        processGameOver(gamestate.getGameOver());
         entry.setText(null);
     }
 
@@ -187,4 +187,20 @@ public class GameWindow {
         return inventoryString.toString();
     }
 
+    public void processGameOver(int gameOverValue) {
+        if (gameOverValue == 0) {
+            return;
+        }
+        else {
+            send.setEnabled(false);
+            entry.setEnabled(false);
+        }
+
+        if (gameOverValue == -1) {
+            gameText.setText("PLACEHOLDER YOU LOSE MESSAGE");
+        }
+        else {
+            gameText.setText("PLACEHOLDER YOU WIN MESSAGE");
+        }
+    }
 }

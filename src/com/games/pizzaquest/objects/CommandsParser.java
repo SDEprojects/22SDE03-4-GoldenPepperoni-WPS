@@ -121,6 +121,7 @@ public class CommandsParser {
                 validCommand = false;
                 break;
         }
+        gamestate.checkGameOver(turns, reputation);
         return validCommand;
     }
 
