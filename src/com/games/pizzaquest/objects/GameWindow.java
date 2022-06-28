@@ -25,6 +25,9 @@ public class GameWindow {
     private final JPanel TopRightPanel;
     private final JPanel BottomRightPanel;
     private PizzaQuestApp app;
+    ImageIcon logo = new ImageIcon("resources/roundPizza.jpg");
+//    ImageIcon mapPicture;
+//    JLabel mapLabel;
 
     public GameWindow(Gamestate gamestate) {
         // Game text
@@ -108,6 +111,7 @@ public class GameWindow {
         entry.addActionListener(e -> sendCommand(gamestate, this));
         frame.add(entry);
 
+        // Send button
         send = new JButton("Send");
         send.setBounds(entry.getX() + entry.getWidth() + 10, frame.getHeight() - 70, 60, 20);
         send.setMargin(new Insets(2, 2, 3, 2));
@@ -121,6 +125,17 @@ public class GameWindow {
         errorLabel.setVisible(false);
         frame.add(errorLabel);
 
+        // Map button
+        JButton mapButton = new JButton("Map");
+        mapButton.setBounds(frame.getWidth()-120, frame.getHeight()-70, 40, 20);
+        mapButton.setMargin((new Insets(2, 2, 3, 2)));
+        mapButton.setBackground(Color.darkGray);
+        mapButton.setForeground(Color.WHITE);
+        mapButton.addActionListener(e -> mapPage());
+
+        frame.add(mapButton);
+
+        // Quit button
         exitButton = new JButton("Quit");
         exitButton.setBounds(frame.getWidth() - 60, frame.getHeight() - 70, 40, 20);
         exitButton.setMargin(new Insets(2, 2, 3, 2));
@@ -130,7 +145,6 @@ public class GameWindow {
         frame.add(exitButton);
 
         // logo on top
-        ImageIcon logo = new ImageIcon("resources/roundPizza.jpg");
         frame.setIconImage(logo.getImage());
 
         // Added background color
@@ -138,6 +152,25 @@ public class GameWindow {
 
         frame.setLayout(null);
         frame.setVisible(true);
+    }
+
+    // Display game map page
+    private void mapPage(){
+        ImageIcon mapPicture = new ImageIcon("test3.png");
+        JLabel mapLabel = new JLabel();
+
+        mapLabel.setIcon(mapPicture);
+        JFrame mapFrame = new JFrame("Game Map");
+
+        mapFrame.add(mapLabel);
+        mapFrame.pack();
+
+        mapFrame.setSize(900, 800);
+        mapFrame.setResizable(true);
+
+        mapFrame.setIconImage(logo.getImage());
+        mapFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        mapFrame.setVisible(true);
     }
 
     public static JTextArea getInventoryLabel() {
