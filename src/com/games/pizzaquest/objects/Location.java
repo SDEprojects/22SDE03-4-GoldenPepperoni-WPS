@@ -8,24 +8,31 @@ public class Location {
     private final String east;
     private final String south;
     private final String west;
+
+    private final String description;
     public NonPlayerCharacter npc = null;
     private ArrayList<Item> items;
 
-    public Location(String name, String north, String south, String east, String west) {
+    public Location(String name, String north, String south, String east, String west, String description) {
         this.name = name;
         this.north = north;
         this.south = south;
         this.east = east;
         this.west = west;
+        this.description = description;
     }
 
-    public Location(String name, NonPlayerCharacter NPC, String north, String south, String east, String west) {
+    public Location(String name, NonPlayerCharacter NPC, String north, String south, String east, String west, String description) {
         this.name = name;
         this.north = north;
         this.south = south;
         this.east = east;
         this.west = west;
         this.npc = NPC;
+        this.description = description;
+    }
+    public String getDescription() {
+        return description;
     }
 
     public ArrayList<Item> getItems() {

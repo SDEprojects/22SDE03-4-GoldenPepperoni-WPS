@@ -36,9 +36,10 @@ public class TextParser {
                 if (synonyms.get(key).contains(multiWordCommandOrNoun)){
                     parsedUserInput.set(0,key);
                     parsedUserInput.remove(1);
-                    System.out.println(parsedUserInput);
+                    return parsedUserInput;
                 }
             }
+            parsedUserInput.set(0, getCommandFromSynonym(parsedUserInput.get(0)));
         }
         return parsedUserInput;
     }
