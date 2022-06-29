@@ -158,7 +158,7 @@ public class GameWindow {
 
     // Display game map page
     private void mapPage(){
-        ImageIcon mapPicture = new ImageIcon("test3.png");
+        ImageIcon mapPicture = new ImageIcon("gameMapPicture.png");
         JLabel mapLabel = new JLabel();
 
         mapLabel.setIcon(mapPicture);
