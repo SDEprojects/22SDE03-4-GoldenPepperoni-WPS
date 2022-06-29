@@ -7,7 +7,7 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 
 public class MusicPlayer {
-    static final String filename = "/music/RetroGameMusic.wav";
+    static final String filename = "/music/Tarantella.wav";
     private static Clip clip = null;
 
     public static void playMusic(){
