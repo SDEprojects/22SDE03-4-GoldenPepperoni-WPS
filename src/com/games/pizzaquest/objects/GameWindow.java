@@ -176,16 +176,15 @@ public class GameWindow {
         mapFrame.setVisible(true);
     }
 
-    public static JTextArea getInventoryLabel() {
+    public JTextArea getInventoryLabel() {
         return inventoryText;
     }
 
     private void sendCommand(Gamestate gamestate, GameWindow gameWindow) {
-        gameText.setText("Command sent would be: " + entry.getText());
         List<String> commandParsed = parser.parse(entry.getText());
         errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, gameWindow));
-        getLocationLabel().setText(setLocationLabel(gamestate));
-        getInventoryLabel().setText(setInventoryLabel(gamestate));
+//        getLocationLabel().setText(setLocationLabel(gamestate));
+//        getInventoryLabel().setText(setInventoryLabel(gamestate));
         processGameOver(gamestate.getGameOver());
         entry.setText(null);
     }
@@ -203,7 +202,7 @@ public class GameWindow {
     }
 
     public String setLocationLabel(Gamestate gamestate) {
-        return gamestate.getPlayerLocation().toString();
+        return gamestate.getPlayerLocation().windowToString();
     }
 
     public String setInventoryLabel(Gamestate gamestate) {
