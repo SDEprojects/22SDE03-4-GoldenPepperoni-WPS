@@ -30,8 +30,15 @@ public class TextParser {
         else if(parsedUserInput.size() >= 4){
             formatTwoWordActionMultiWordNounCommand(parsedUserInput);
         }
-        else{
-            parsedUserInput.set(0, getCommandFromSynonym(parsedUserInput.get(0)));
+        else if (parsedUserInput.size() == 2){
+            String multiWordCommandOrNoun = parsedUserInput.get(0).concat(" " + parsedUserInput.get(1));
+            for (String key : synonymKeys){
+                if (synonyms.get(key).contains(multiWordCommandOrNoun)){
+                    parsedUserInput.set(0,key);
+                    parsedUserInput.remove(1);
+                    System.out.println(parsedUserInput);
+                }
+            }
         }
         return parsedUserInput;
     }
