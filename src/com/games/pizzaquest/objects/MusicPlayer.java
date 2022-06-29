@@ -8,9 +8,10 @@ import java.io.InputStream;
 
 public class MusicPlayer {
     static final String filename = "/music/Tarantella.wav";
-    private static Clip clip = null;
+    static Clip clip = null;
 
     public static void playMusic(){
+
         try (InputStream in = MusicPlayer.class.getResourceAsStream(filename)){
             InputStream bufferedIn = new BufferedInputStream(in);
             try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(bufferedIn)){

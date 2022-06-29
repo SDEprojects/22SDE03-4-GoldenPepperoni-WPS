@@ -5,8 +5,7 @@ import com.games.pizzaquest.app.PizzaQuestApp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.games.pizzaquest.objects.MusicPlayer.playMusic;
-import static com.games.pizzaquest.objects.MusicPlayer.stopMusic;
+import static com.games.pizzaquest.objects.MusicPlayer.*;
 
 public class CommandsParser {
     private static final ArrayList<Item> itemList = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
@@ -117,7 +116,9 @@ public class CommandsParser {
                 stopMusic();
                 break;
             case "unmute":
-                playMusic();
+                if(!clip.isRunning()){
+                    playMusic();
+                }
                 break;
             default:
                 String response = String.format("\n\nI don't understand '%s'%n\n", verbAndNounList) +
