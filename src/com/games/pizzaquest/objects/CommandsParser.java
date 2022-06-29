@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static com.games.pizzaquest.objects.MusicPlayer.playMusic;
-import static com.games.pizzaquest.objects.MusicPlayer.stopMusic;
+import static com.games.pizzaquest.objects.MusicPlayer.*;
 
 public class CommandsParser {
     private static final ArrayList<Item> itemList = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
@@ -122,7 +121,9 @@ public class CommandsParser {
                 stopMusic();
                 break;
             case "unmute":
-                playMusic();
+                if(!clip.isRunning()){
+                    playMusic();
+                }
                 break;
             default:
                 System.out.printf("I don't understand '%s'%n", verbAndNounList);
