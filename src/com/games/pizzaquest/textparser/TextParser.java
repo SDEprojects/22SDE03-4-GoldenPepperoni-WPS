@@ -15,22 +15,20 @@ public class TextParser {
 
     public List<String> parse(String userInput) {
         currentInput = userInput;
-        System.out.println(synonymKeys);
         //takes in user input and then splits it on the spaces. Logic comes later
         List<String> parsedUserInput = new ArrayList<>(Arrays.asList(userInput.toLowerCase().split(" ")));
         //after we break up the user input send it to be process
         if (parsedUserInput.size() == 3) {
             String multiWordCommandOrNoun = parsedUserInput.get(0).concat(" " + parsedUserInput.get(1));
-            System.out.println(multiWordCommandOrNoun);
             for (String key : synonymKeys){
                 if (synonyms.get(key).contains(multiWordCommandOrNoun)){
                     return formatTwoWordActionSingleWordNounCommand(parsedUserInput);
                 }
             }
-            parsedUserInput = formatOneWordActionMultiWordNounCommand(parsedUserInput);
+            formatOneWordActionMultiWordNounCommand(parsedUserInput);
         }
         else if(parsedUserInput.size() >= 4){
-            parsedUserInput = formatTwoWordActionMultiWordNounCommand(parsedUserInput);
+            formatTwoWordActionMultiWordNounCommand(parsedUserInput);
         }
         else{
             parsedUserInput.set(0, getCommandFromSynonym(parsedUserInput.get(0)));
@@ -38,34 +36,27 @@ public class TextParser {
         return parsedUserInput;
     }
 
-    private List<String> formatOneWordActionMultiWordNounCommand(List<String> rawInput){
-        List<String> formattedCommand = rawInput;
+    private void formatOneWordActionMultiWordNounCommand(List<String> rawInput){
         String formattedNoun = rawInput.get(1).concat(" " + rawInput.get(2));
-        formattedCommand.set(0, getCommandFromSynonym(rawInput.get(0)));
-        formattedCommand.set(1, getCommandFromSynonym(formattedNoun));
-        formattedCommand.remove(2);
-
-        return formattedCommand;
+        rawInput.set(0, getCommandFromSynonym(rawInput.get(0)));
+        rawInput.set(1, getCommandFromSynonym(formattedNoun));
+        rawInput.remove(2);
     }
-    private List<String> formatTwoWordActionMultiWordNounCommand(List<String> rawInput){
-        List<String> formattedCommand = rawInput;
-        String formattedAction = formattedCommand.get(0).concat(" " + formattedCommand.get(1));
-        String formattedNoun = formattedCommand.get(2).concat(" " + formattedCommand.get(3));
+    private void formatTwoWordActionMultiWordNounCommand(List<String> rawInput){
+        String formattedAction = rawInput.get(0).concat(" " + rawInput.get(1));
+        String formattedNoun = rawInput.get(2).concat(" " + rawInput.get(3));
 
-        formattedCommand.set(0, getCommandFromSynonym(formattedAction));
-        formattedCommand.set(1, formattedNoun);
-        formattedCommand.remove(3);
-        formattedCommand.remove(2);
-
-        return formattedCommand;
+        rawInput.set(0, getCommandFromSynonym(formattedAction));
+        rawInput.set(1, formattedNoun);
+        rawInput.remove(3);
+        rawInput.remove(2);
     }
     private List<String> formatTwoWordActionSingleWordNounCommand(List<String> rawInput){
-        List<String> formattedCommand = rawInput;
         String formattedAction = rawInput.get(0).concat(" " + rawInput.get(1));
-        formattedCommand.set(0, getCommandFromSynonym(formattedAction));
-        formattedCommand.remove(1);
+        rawInput.set(0, getCommandFromSynonym(formattedAction));
+        rawInput.remove(1);
 
-        return formattedCommand;
+        return rawInput;
     }
 
     private String getCommandFromSynonym(String userInput){
@@ -77,6 +68,4 @@ public class TextParser {
         }
         return inputSynonym;
     }
-
-
 }
