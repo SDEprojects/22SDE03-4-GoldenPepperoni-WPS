@@ -7,7 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class GameWindow {
@@ -133,7 +138,13 @@ public class GameWindow {
         mapButton.setMargin((new Insets(2, 2, 3, 2)));
         mapButton.setBackground(Color.darkGray);
         mapButton.setForeground(Color.WHITE);
-        mapButton.addActionListener(e -> mapPage());
+        mapButton.addActionListener(e -> {
+            try {
+                mapPage();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         frame.add(mapButton);
 
@@ -157,8 +168,9 @@ public class GameWindow {
     }
 
     // Display game map page
-    private void mapPage(){
-        ImageIcon mapPicture = new ImageIcon("gameMapPicture.png");
+    private void mapPage() throws URISyntaxException {
+
+        ImageIcon mapPicture = new ImageIcon(Objects.requireNonNull(getClass().getResource("/gameMapPicture.png")));
         JLabel mapLabel = new JLabel();
 
         mapLabel.setIcon(mapPicture);
@@ -237,5 +249,20 @@ public class GameWindow {
         else {
             gameText.setText("PLACEHOLDER YOU WIN MESSAGE");
         }
+    }
+    private File getFileFromResource(String fileName) throws URISyntaxException {
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+
+            // failed if files have whitespaces or special characters
+            //return new File(resource.getFile());
+
+            return new File(resource.toURI());
+        }
+
     }
 }
