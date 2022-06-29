@@ -1,6 +1,6 @@
 {
   "go": ["move","travel","walk","ride","drive"],
-  "take": ["pick up", "grab", "obtain"],
+  "take": ["pick up", "grab", "obtain","get"],
   "look": ["inspect"],
   "give": [],
   "help": [],
