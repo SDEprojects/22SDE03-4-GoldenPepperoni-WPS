@@ -4,7 +4,6 @@ import com.games.pizzaquest.app.PizzaQuestApp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static com.games.pizzaquest.objects.MusicPlayer.playMusic;
 import static com.games.pizzaquest.objects.MusicPlayer.stopMusic;
@@ -35,34 +34,26 @@ public class CommandsParser {
                 }
 
                 String nextLoc = gamestate.getPlayerLocation().getNextLocation(noun);
-                System.out.println();
+
                 if (!nextLoc.equals("nothing")) {
-                    System.out.println(nextLoc);
                     gamestate.setPlayerLocation(PizzaQuestApp.getGameMap().get(nextLoc.toLowerCase()));
-
-                    System.out.println();
-                    System.out.println(gamestate.getPlayer().look(gamestate.getPlayerLocation()));
-                    System.out.println();
-
+                    String message = String.format("You travel %s to %s.\n", verb, noun) +
+                            ("\nYou see DESCRIPTION OF THE CURRENT LOCATION");
+                    window.getGameLabel().setText(message);
                 } else {
-                    System.out.println("There is nothing that way!");
+                    String message = window.getGameLabel().getText() +
+                            String.format("\n\nThere is nothing to the %s.", noun);
+                    window.getGameLabel().setText(message);
                     break;
                 }
+
+                window.getLocationLabel().setText(window.setLocationLabel(gamestate));
+                window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
+
                 turns += 1;
                 break;
             case "look":
-                //look(); //player location or item  description printed
-                //will need a item list and a location list
-                //todo - check size and get last
-                //if room, do the first, else if item, do the second
-
-                Item item;
-                if (noun.equals("")) {
-                    validCommand = false;
-                    break;
-                } else {
-                    item = ExternalFileReader.getSingleItem(noun);
-                }
+                Item item = ExternalFileReader.getSingleItem(noun);
 
                 if (itemList.contains(item)) {
                     window.getGameLabel().setText(item.getDescription());
@@ -83,8 +74,7 @@ public class CommandsParser {
                 }
 
                 gamestate.getPlayerLocation().getItems().removeIf(i -> i.getName().equals(noun));
-                System.out.println("Player inventory: " + gamestate.getPlayer().getInventory());
-                System.out.println("Items in location: " + gamestate.getPlayerLocation().getItems());
+
                 if (!itemFound) {
                     validCommand = false;
                 }
@@ -92,7 +82,12 @@ public class CommandsParser {
             case "talk":
                 //add item to inventory
                 talk(gamestate, noun);
-                window.getGameLabel().setText(CommandsParser.talk(gamestate, verbAndNounList.get(1)));
+                String npcTalk = gamestate.getPlayerLocation().npc.getName();
+                npcTalk = String.format("\n\nYou attempt to talk with %s.\n", npcTalk);
+                StringBuilder currentText = new StringBuilder(window.getGameLabel().getText());
+                currentText.append(npcTalk);
+                currentText.append(CommandsParser.talk(gamestate, verbAndNounList.get(1)));
+                window.getGameLabel().setText(currentText.toString());
                 break;
             case "give":
                 //removes item from inventory
@@ -105,13 +100,13 @@ public class CommandsParser {
                 }
                 gamestate.getPlayer().removeFromInventory(noun);
                 break;
-            case "inventory":
+            /*case "inventory":
                 Set<Item> tempInventory = gamestate.getPlayer().getInventory();
                 System.out.println("Items in the Inventory");
                 for (Item i : tempInventory) {
                     System.out.println(i.getName());
                 }
-                break;
+                break;*/
             case "help":
                 window.getGameLabel().setText(ExternalFileReader.gameInstructions());
                 break;
@@ -125,8 +120,9 @@ public class CommandsParser {
                 playMusic();
                 break;
             default:
-                System.out.printf("I don't understand '%s'%n", verbAndNounList);
-                System.out.println("Type help if you need some guidance on command structure!");
+                String response = String.format("\n\nI don't understand '%s'%n\n", verbAndNounList) +
+                        "Type help if you need some guidance on command structure!";
+                window.getGameLabel().setText(response);
                 validCommand = false;
                 break;
         }
@@ -136,7 +132,6 @@ public class CommandsParser {
     }
 
     public static void quitGame() {
-        System.out.println("You'll always have a pizza our heart ... Goodbye!");
         System.exit(0);
     }
 
@@ -150,12 +145,9 @@ public class CommandsParser {
     public static String talk(Gamestate gamestate, String noun) {
         Location playerLocation = gamestate.getPlayerLocation();
         if (playerLocation.npc != null && playerLocation.npc.getName().equals(noun)) {
-            System.out.println(playerLocation.npc.giveQuest());
             return playerLocation.npc.giveQuest();
         }
 
-        return "That player many not be in in this room or even exist!";
-
+        return String.format("There doesn't seem to be someone named \"%s\" here", noun);
     }
-
 }

@@ -75,7 +75,7 @@ public class Location {
 
     private String printBoarders() {
         return "\n  To the north we have " + getNorth() + "\n  To the east we have " + getEast() +
-                "\n  To the south we have " + getSouth() + "\n  To the west we have " + getWest() + "\n\nItems in room:";
+                "\n  To the south we have " + getSouth() + "\n  To the west we have " + getWest();
     }
 
     private StringBuilder printItems() {
@@ -99,9 +99,12 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location: " + getName() + ".\n\nExits:" + printBoarders() + "\n" + printItems() + "\n" +
+        return "Location: " + getName() + ".\n\nExits:" + printBoarders() + "\n\nItems in room:" + "\n" + printItems() + "\n" +
                 (npc != null ? npc.getName() + " is in the room" : "There is no one in the room");
     }
 
+    public String windowToString() {
+        return "Location: " + getName() + ".\n\nExits:" + printBoarders();
+    }
 
 }
