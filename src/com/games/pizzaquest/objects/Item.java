@@ -1,12 +1,13 @@
 package com.games.pizzaquest.objects;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Item {
-    String name;
-    String type;
-    String room;
-    String description;
+    private String name;
+    private String type;
+    private String room;
+    private String description;
 
     public Item(String name) {
         this.name = name;
@@ -58,5 +59,18 @@ public class Item {
     @Override
     public String toString() {
         return getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return getName().equals(item.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

@@ -7,7 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class GameWindow {
@@ -20,11 +25,16 @@ public class GameWindow {
     private final JTextField entry;
     private final JButton send;
     private final JButton exitButton;
+    private final JButton mapButton;
     private final JLabel errorLabel;
     private final JPanel MainPanel;
     private final JPanel TopRightPanel;
     private final JPanel BottomRightPanel;
     private PizzaQuestApp app;
+    ImageIcon logo = new ImageIcon("roundPizza.jpg");
+
+//    ImageIcon mapPicture;
+//    JLabel mapLabel;
 
     public GameWindow(Gamestate gamestate) {
         // Game text
@@ -105,21 +115,40 @@ public class GameWindow {
             }
         });
         entry.setBounds(10, frame.getHeight() - 70, 300, 20);
-        entry.addActionListener(e -> sendCommand(gamestate));
+        entry.addActionListener(e -> sendCommand(gamestate, this));
         frame.add(entry);
 
+        // Send button
         send = new JButton("Send");
         send.setBounds(entry.getX() + entry.getWidth() + 10, frame.getHeight() - 70, 60, 20);
         send.setMargin(new Insets(2, 2, 3, 2));
-        send.addActionListener(e -> sendCommand(gamestate));
+        send.addActionListener(e -> sendCommand(gamestate, this));
         frame.add(send);
 
-        errorLabel = new JLabel("Errors show here");
+        errorLabel = new JLabel("Invalid command");
         errorLabel.setBackground(Color.RED);
         errorLabel.setOpaque(true);
         errorLabel.setBounds(10, frame.getHeight() - 95, 300, 20);
+        errorLabel.setVisible(false);
         frame.add(errorLabel);
 
+        // Map button
+        mapButton = new JButton("Map");
+        mapButton.setBounds(frame.getWidth()-120, frame.getHeight()-70, 40, 20);
+        mapButton.setMargin((new Insets(2, 2, 3, 2)));
+        mapButton.setBackground(Color.darkGray);
+        mapButton.setForeground(Color.WHITE);
+        mapButton.addActionListener(e -> {
+            try {
+                mapPage();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        frame.add(mapButton);
+
+        // Quit button
         exitButton = new JButton("Quit");
         exitButton.setBounds(frame.getWidth() - 60, frame.getHeight() - 70, 40, 20);
         exitButton.setMargin(new Insets(2, 2, 3, 2));
@@ -129,7 +158,6 @@ public class GameWindow {
         frame.add(exitButton);
 
         // logo on top
-        ImageIcon logo = new ImageIcon("resources/roundPizza.jpg");
         frame.setIconImage(logo.getImage());
 
         // Added background color
@@ -139,35 +167,37 @@ public class GameWindow {
         frame.setVisible(true);
     }
 
-    public static JTextArea getInventoryLabel() {
+    // Display game map page
+    private void mapPage() throws URISyntaxException {
+
+        ImageIcon mapPicture = new ImageIcon(Objects.requireNonNull(getClass().getResource("/gameMapPicture.png")));
+        JLabel mapLabel = new JLabel();
+
+        mapLabel.setIcon(mapPicture);
+        JDialog mapFrame = new JDialog();
+        mapFrame.setModal(true);
+
+        mapFrame.add(mapLabel);
+        mapFrame.pack();
+
+        mapFrame.setSize(900, 800);
+        mapFrame.setResizable(true);
+
+        mapFrame.setIconImage(logo.getImage());
+        mapFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        mapFrame.setVisible(true);
+    }
+
+    public JTextArea getInventoryLabel() {
         return inventoryText;
     }
 
-    private void sendCommand(Gamestate gamestate) {
-        gameText.setText("Command sent would be: " + entry.getText());
+    private void sendCommand(Gamestate gamestate, GameWindow gameWindow) {
         List<String> commandParsed = parser.parse(entry.getText());
-        CommandsParser.processCommands(commandParsed, gamestate);
-        getLocationLabel().setText(setLocationLabel(gamestate));
-        getInventoryLabel().setText(setInventoryLabel(gamestate));
-
-        switch (commandParsed.get(0)){
-            case "help":
-                String instructions = ExternalFileReader.gameInstructions();
-                getGameLabel().setText(instructions);
-                break;
-            case "talk":
-                getGameLabel().setText(CommandsParser.talk(gamestate, commandParsed.get(1)));
-            case "look":
-                getGameLabel().setText(gamestate.getPlayer().look(new Item(commandParsed.get(1)).getDescription()));
-        }
-        if (commandParsed.get(0).equals("help")){
-            String instructions = ExternalFileReader.gameInstructions();
-            getGameLabel().setText(instructions);
-        }
-
-
-        errorLabel.setVisible(entry.getText().isEmpty());
-
+        errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, gameWindow));
+//        getLocationLabel().setText(setLocationLabel(gamestate));
+//        getInventoryLabel().setText(setInventoryLabel(gamestate));
+        processGameOver(gamestate.getGameOver());
         entry.setText(null);
     }
 
@@ -184,7 +214,7 @@ public class GameWindow {
     }
 
     public String setLocationLabel(Gamestate gamestate) {
-        return gamestate.getPlayerLocation().toString();
+        return gamestate.getPlayerLocation().windowToString();
     }
 
     public String setInventoryLabel(Gamestate gamestate) {
@@ -204,4 +234,35 @@ public class GameWindow {
         return inventoryString.toString();
     }
 
+    public void processGameOver(int gameOverValue) {
+        if (gameOverValue == 0) {
+            return;
+        }
+        else {
+            send.setEnabled(false);
+            entry.setEnabled(false);
+        }
+
+        if (gameOverValue == -1) {
+            gameText.setText("PLACEHOLDER YOU LOSE MESSAGE");
+        }
+        else {
+            gameText.setText("PLACEHOLDER YOU WIN MESSAGE");
+        }
+    }
+    private File getFileFromResource(String fileName) throws URISyntaxException {
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+
+            // failed if files have whitespaces or special characters
+            //return new File(resource.getFile());
+
+            return new File(resource.toURI());
+        }
+
+    }
 }

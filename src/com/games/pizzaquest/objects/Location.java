@@ -8,24 +8,31 @@ public class Location {
     private final String east;
     private final String south;
     private final String west;
+
+    private final String description;
     public NonPlayerCharacter npc = null;
     private ArrayList<Item> items;
 
-    public Location(String name, String north, String south, String east, String west) {
+    public Location(String name, String north, String south, String east, String west, String description) {
         this.name = name;
         this.north = north;
         this.south = south;
         this.east = east;
         this.west = west;
+        this.description = description;
     }
 
-    public Location(String name, NonPlayerCharacter NPC, String north, String south, String east, String west) {
+    public Location(String name, NonPlayerCharacter NPC, String north, String south, String east, String west, String description) {
         this.name = name;
         this.north = north;
         this.south = south;
         this.east = east;
         this.west = west;
         this.npc = NPC;
+        this.description = description;
+    }
+    public String getDescription() {
+        return description;
     }
 
     public ArrayList<Item> getItems() {
@@ -75,7 +82,7 @@ public class Location {
 
     private String printBoarders() {
         return "\n  To the north we have " + getNorth() + "\n  To the east we have " + getEast() +
-                "\n  To the south we have " + getSouth() + "\n  To the west we have " + getWest() + "\n\nItems in room:";
+                "\n  To the south we have " + getSouth() + "\n  To the west we have " + getWest();
     }
 
     private StringBuilder printItems() {
@@ -99,9 +106,12 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location: " + getName() + ".\n\nExits:" + printBoarders() + "\n" + printItems() + "\n" +
+        return "Location: " + getName() + ".\n\nExits:" + printBoarders() + "\n\nItems in room:" + "\n" + printItems() + "\n" +
                 (npc != null ? npc.getName() + " is in the room" : "There is no one in the room");
     }
 
+    public String windowToString() {
+        return "Location: " + getName() + ".\n\nExits:" + printBoarders();
+    }
 
 }
