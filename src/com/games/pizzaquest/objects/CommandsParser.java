@@ -64,10 +64,12 @@ public class CommandsParser {
                 break;
             case "take":
                 boolean itemFound = false;
+                String message = null;
                 //add item to inventory
                 for (Item i : gamestate.getPlayerLocation().getItems()) {
                     if (i.getName().equals(noun)) {
                         gamestate.getPlayer().addToInventory(noun);
+
                         itemFound = true;
                     }
                 }
@@ -75,8 +77,15 @@ public class CommandsParser {
                 gamestate.getPlayerLocation().getItems().removeIf(i -> i.getName().equals(noun));
 
                 if (!itemFound) {
+                    message = "\n\nYou try to take the " + noun + " but you don't see it.";
                     validCommand = false;
                 }
+                else {
+                    message = "\n\nYou take the " + noun;
+                }
+
+                window.getGameLabel().setText(window.getGameLabel().getText() + message);
+                window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
                 break;
             case "talk":
                 //add item to inventory
@@ -98,6 +107,7 @@ public class CommandsParser {
                     reputation += gamestate.getPlayerLocation().npc.processItem(noun);
                 }
                 gamestate.getPlayer().removeFromInventory(noun);
+                window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
                 break;
             /*case "inventory":
                 Set<Item> tempInventory = gamestate.getPlayer().getInventory();
