@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
@@ -16,20 +15,28 @@ import java.util.Objects;
 import java.util.Set;
 
 public class GameWindow {
+    private final Font FIELD_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+    private final int NAV_WIDTH = 22;
+    private final int NAV_HEIGHT = 22;
+
     private static final TextParser parser = new TextParser();
     private static JTextArea gameText;
     private static JTextArea locationText;
     private static JTextArea inventoryText;
-    private final Font FIELD_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
     private final JFrame frame;
     private final JTextField entry;
     private final JButton send;
     private final JButton exitButton;
     private final JButton mapButton;
     private final JLabel errorLabel;
-    private final JPanel MainPanel;
-    private final JPanel TopRightPanel;
-    private final JPanel BottomRightPanel;
+    private final JPanel mainPanel;
+    private final JPanel topRightPanel;
+    private final JPanel bottomRightPanel;
+    private final JPanel navigationPanel;
+    private final JButton northButton;
+    private final JButton westButton;
+    private final JButton eastButton;
+    private final JButton southButton;
     private PizzaQuestApp app;
     ImageIcon logo = new ImageIcon("roundPizza.jpg");
 
@@ -62,38 +69,46 @@ public class GameWindow {
         inventoryText.setBounds(420, 210, 200, 190);
 
         // Main Panel = Big Left Panel
-        MainPanel = new JPanel();
-        MainPanel.setBackground(Color.pink);
-        MainPanel.setBounds(5,0,410, 500);
-        MainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        MainPanel.setBackground(Color.cyan);
-        MainPanel.setLayout(new GridLayout(0,1));
-        MainPanel.add(gameText);
+        mainPanel = new JPanel();
+        mainPanel.setBackground(Color.pink);
+        mainPanel.setBounds(5, 0, 410, 500);
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        mainPanel.setBackground(Color.cyan);
+        mainPanel.setLayout(new GridLayout(0, 1));
+        mainPanel.add(gameText);
 
         // Top Right Panel
-        TopRightPanel = new JPanel();
-        TopRightPanel.setBackground(Color.orange);
-        TopRightPanel.setBounds(420,0,230,250);
-        TopRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        TopRightPanel.setLayout(new GridLayout(0,1));
-        TopRightPanel.add(locationText);
+        topRightPanel = new JPanel();
+        topRightPanel.setBackground(Color.orange);
+        topRightPanel.setBounds(420, 0, 230, 250);
+        topRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        topRightPanel.setLayout(new GridLayout(0, 1));
+        topRightPanel.add(locationText);
 
         // Bottom Right Panel
-        BottomRightPanel = new JPanel();
-        BottomRightPanel.setBackground(Color.orange);
-        BottomRightPanel.setBounds(420,255,230,245);
-        BottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        BottomRightPanel.setLayout(new GridLayout(0,1));
-        BottomRightPanel.add(inventoryText);
+        bottomRightPanel = new JPanel();
+        bottomRightPanel.setBackground(Color.orange);
+        bottomRightPanel.setBounds(420, 255, 230, 245);
+        bottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        bottomRightPanel.setLayout(new GridLayout(0, 1));
+        bottomRightPanel.add(inventoryText);
+
+        // Navigation Panel
+        navigationPanel = new JPanel();
+        navigationPanel.setBackground(Color.white);
+        navigationPanel.setBounds(653, 2, 100, 100);
+        navigationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        navigationPanel.setLayout(new GridLayout(3, 3));
 
         // Frame
         frame = new JFrame("Golden Pepperoni Pizza");
-        frame.setSize(654, 600);
+        frame.setSize(770, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false); // prevents resizing the window
-        frame.add(MainPanel);
-        frame.add(TopRightPanel);
-        frame.add(BottomRightPanel);
+        frame.add(mainPanel);
+        frame.add(topRightPanel);
+        frame.add(bottomRightPanel);
+        frame.add(navigationPanel);
 
         // User entry
         entry = new JTextField();
@@ -157,6 +172,20 @@ public class GameWindow {
         exitButton.setForeground(Color.WHITE);
         frame.add(exitButton);
 
+        // Create Nav buttons
+        northButton = createNavButton("N", "go north", gamestate, this);
+        westButton = createNavButton("W", "go west", gamestate, this);
+        eastButton = createNavButton("E", "go east", gamestate, this);
+        southButton = createNavButton("S", "go south", gamestate, this);
+        navigationPanel.add(new JLabel());
+        navigationPanel.add(northButton);
+        navigationPanel.add(new JLabel());
+        navigationPanel.add(westButton);
+        navigationPanel.add(new JLabel());
+        navigationPanel.add(eastButton);
+        navigationPanel.add(new JLabel());
+        navigationPanel.add(southButton);
+
         // logo on top
         frame.setIconImage(logo.getImage());
 
@@ -195,8 +224,6 @@ public class GameWindow {
     private void sendCommand(Gamestate gamestate, GameWindow gameWindow) {
         List<String> commandParsed = parser.parse(entry.getText());
         errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, gameWindow));
-//        getLocationLabel().setText(setLocationLabel(gamestate));
-//        getInventoryLabel().setText(setInventoryLabel(gamestate));
         processGameOver(gamestate.getGameOver());
         entry.setText(null);
     }
@@ -241,6 +268,10 @@ public class GameWindow {
         else {
             send.setEnabled(false);
             entry.setEnabled(false);
+            northButton.setEnabled(false);
+            westButton.setEnabled(false);
+            eastButton.setEnabled(false);
+            southButton.setEnabled(false);
         }
 
         if (gameOverValue == -1) {
@@ -263,6 +294,17 @@ public class GameWindow {
 
             return new File(resource.toURI());
         }
+    }
 
+    private JButton createNavButton(String name, String target, Gamestate game, GameWindow window) {
+        List<String> commandParsed = parser.parse(target);
+
+        JButton button = new JButton(name);
+        button.setSize(NAV_WIDTH, NAV_HEIGHT);
+        button.setMargin(new Insets(2, 2, 2, 2));
+        button.addActionListener(e -> CommandsParser.processCommands(commandParsed, game, window));
+        button.setBackground(Color.DARK_GRAY);
+        button.setForeground(Color.WHITE);
+        return button;
     }
 }
