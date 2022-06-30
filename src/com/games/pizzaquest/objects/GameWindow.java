@@ -98,7 +98,6 @@ public class GameWindow {
         navigationPanel = new JPanel();
         navigationPanel.setBackground(Color.white);
         navigationPanel.setBounds(653, 2, 100, 100);
-        navigationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         navigationPanel.setLayout(new GridLayout(3, 3));
 
         // Frame
@@ -179,7 +178,7 @@ public class GameWindow {
         eastButton = createNavButton("E", "go east", gamestate, this);
         southButton = createNavButton("S", "go south", gamestate, this);
         lookButton = createNavButton("", "look", gamestate, this);
-        lookButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("look20.png"))));
+        lookButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/look20.png"))));
         lookButton.setBackground(Color.lightGray);
 
         navigationPanel.add(new JLabel());
@@ -196,6 +195,7 @@ public class GameWindow {
 
         // Added background color
         frame.getContentPane().setBackground(new Color(Color.pink.getRGB()));
+        navigationPanel.setBackground(Color.pink);
 
         frame.setLayout(null);
         frame.setVisible(true);
@@ -218,7 +218,7 @@ public class GameWindow {
         mapFrame.setResizable(true);
 
         mapFrame.setIconImage(logo.getImage());
-        mapFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mapFrame.setVisible(true);
     }
 
