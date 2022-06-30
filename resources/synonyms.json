@@ -7,5 +7,6 @@
   "quit": ["close", "exit"],
   "talk": ["talk to", "speak", "speak to"],
   "mute": ["sound off", "music off"],
-  "unmute": ["sound on", "music on"]
+  "unmute": ["sound on", "music on"],
+  "god": ["god mode"]
 }
