@@ -11,6 +11,7 @@ public class Gamestate {
     private Location playerLocation;
     private Player player;
     private int gameOver = 0;
+    private boolean isGodMode = false;
 
 
     public Gamestate(Location playerLocation) {
@@ -59,4 +60,14 @@ public class Gamestate {
     public int getGameOver() {
         return gameOver;
     }
+
+    public boolean isGodMode() {
+        return isGodMode;
+    }
+
+    public void setGodMode(boolean godMode) {
+        isGodMode = godMode;
+    }
+
+
 }

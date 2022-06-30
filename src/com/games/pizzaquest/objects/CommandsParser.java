@@ -8,7 +8,7 @@ import java.util.List;
 import static com.games.pizzaquest.objects.MusicPlayer.*;
 
 public class CommandsParser {
-    private static final ArrayList<Item> itemList = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
+    private static ArrayList<Item> itemList = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
     private static int turns;
     private static int reputation;
 
@@ -49,7 +49,15 @@ public class CommandsParser {
                 window.getLocationLabel().setText(window.setLocationLabel(gamestate));
                 window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
 
-                turns += 1;
+                if (gamestate.isGodMode()) {
+                    turns = 0;
+                    System.out.println(turns);
+                }
+                else {
+                    turns += 1;
+                    System.out.println(turns);
+                }
+
                 break;
             case "look":
                 Item item = ExternalFileReader.getSingleItem(noun);
@@ -67,9 +75,12 @@ public class CommandsParser {
                 String message = null;
                 //add item to inventory
                 for (Item i : gamestate.getPlayerLocation().getItems()) {
-                    if (i.getName().equals(noun)) {
+                    if (i.getName().equals(noun) && !gamestate.isGodMode()) {
                         gamestate.getPlayer().addToInventory(noun);
-
+                        itemFound = true;
+                    }
+                    else if (gamestate.isGodMode() && itemList.contains(new Item(noun))){
+                        gamestate.getPlayer().addToInventory(noun);
                         itemFound = true;
                     }
                 }
@@ -77,8 +88,13 @@ public class CommandsParser {
                 gamestate.getPlayerLocation().getItems().removeIf(i -> i.getName().equals(noun));
 
                 if (!itemFound) {
-                    message = "\n\nYou try to take the " + noun + " but you don't see it.";
-                    validCommand = false;
+                    if (gamestate.isGodMode()){
+                        message = "\n\nEven with your godly powers, you cannot add " + noun + " to your inventory";
+                    }
+                    else {
+                        message = "\n\nYou try to take the " + noun + " but you don't see it.";
+                        validCommand = false;
+                    }
                 }
                 else {
                     message = "\n\nYou take the " + noun;
@@ -117,7 +133,7 @@ public class CommandsParser {
                 }
                 break;*/
             case "help":
-                window.getGameLabel().setText(ExternalFileReader.gameInstructions());
+                    window.getGameLabel().setText(ExternalFileReader.gameInstructions(gamestate));
                 break;
             case "reset":
                 //resetGame();
@@ -129,6 +145,10 @@ public class CommandsParser {
                 if(!clip.isRunning()){
                     playMusic();
                 }
+                break;
+            case "god":
+                gamestate.setGodMode(true);
+                System.out.println("God mode on: " + gamestate.isGodMode());
                 break;
             default:
                 String response = String.format("\n\nI don't understand '%s'%n\n", verbAndNounList) +
@@ -160,5 +180,9 @@ public class CommandsParser {
         }
 
         return String.format("There doesn't seem to be someone named \"%s\" here", noun);
+    }
+
+    public static ArrayList<Item> getItemList() {
+        return itemList;
     }
 }
