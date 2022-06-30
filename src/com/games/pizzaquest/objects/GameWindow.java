@@ -37,6 +37,7 @@ public class GameWindow {
     private final JButton westButton;
     private final JButton eastButton;
     private final JButton southButton;
+    private final JButton lookButton;
     private PizzaQuestApp app;
     ImageIcon logo = new ImageIcon("roundPizza.jpg");
 
@@ -177,11 +178,15 @@ public class GameWindow {
         westButton = createNavButton("W", "go west", gamestate, this);
         eastButton = createNavButton("E", "go east", gamestate, this);
         southButton = createNavButton("S", "go south", gamestate, this);
+        lookButton = createNavButton("Look", "look", gamestate, this);
+        lookButton.setText("");
+        lookButton.setIcon(new ImageIcon("look20.png"));
+        lookButton.setBackground(Color.lightGray);
         navigationPanel.add(new JLabel());
         navigationPanel.add(northButton);
         navigationPanel.add(new JLabel());
         navigationPanel.add(westButton);
-        navigationPanel.add(new JLabel());
+        navigationPanel.add(lookButton);
         navigationPanel.add(eastButton);
         navigationPanel.add(new JLabel());
         navigationPanel.add(southButton);
