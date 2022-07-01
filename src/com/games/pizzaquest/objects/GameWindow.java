@@ -4,6 +4,7 @@ import com.games.pizzaquest.app.PizzaQuestApp;
 import com.games.pizzaquest.textparser.TextParser;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -13,6 +14,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import static com.games.pizzaquest.objects.MusicPlayer.*;
 
 public class GameWindow {
     private final Font FIELD_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
@@ -38,6 +41,13 @@ public class GameWindow {
     private final JButton eastButton;
     private final JButton southButton;
     private final JButton lookButton;
+    private final JPanel volumePanel;
+    private final JLabel volumeLabel;
+    private final JSlider volumeSlider;
+    private final JButton muteButton;
+//    private final JButton unmuteButton;
+    private final JPanel sliderPanel;
+    private final JPanel mutePanel;
     private PizzaQuestApp app;
     ImageIcon logo = new ImageIcon("roundPizza.jpg");
 
@@ -100,6 +110,58 @@ public class GameWindow {
         navigationPanel.setBounds(653, 2, 100, 100);
         navigationPanel.setLayout(new GridLayout(3, 3));
 
+        // Volume Slider
+        volumeLabel = new JLabel();
+        volumeSlider = new JSlider(0, 100, 40);
+        volumeSlider.setPreferredSize(new Dimension(200, 200));
+        volumeSlider.setPaintTicks(true);
+        volumeSlider.setMinorTickSpacing(10);
+        volumeSlider.setPaintTrack(true);
+        volumeSlider.setMajorTickSpacing(25);
+        volumeSlider.setPaintLabels(true);
+        volumeSlider.setFont(new Font("MV Boli", Font.PLAIN, 8));
+        volumeLabel.setFont(new Font("MV Boli", Font.PLAIN, 10));
+        volumeSlider.setOrientation(SwingConstants.VERTICAL);
+        volumeLabel.setText("Vol =" + volumeSlider.getValue());
+        volumeSlider.addChangeListener(this::stateChanged);
+
+        // Volume Panel
+        volumePanel = new JPanel();
+        volumePanel.setBounds(653, 110, 100, 150);
+        volumePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        volumePanel.setLayout(new GridLayout(1, 0));
+        volumePanel.add(volumeSlider);
+        volumePanel.add(volumeLabel);
+
+        // Slider Panel
+        sliderPanel = new JPanel();
+        sliderPanel.setBounds(651, 108, 98, 248);
+        sliderPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+        sliderPanel.setLayout(new GridLayout(1, 0));
+        sliderPanel.add(volumePanel);
+
+        // Mute/Unmute Panel
+        mutePanel = new JPanel();
+
+        // Mute button
+        muteButton = new JButton("Mute");
+        muteButton.setBounds(668, 265, 70, 20);
+        muteButton.setBackground(Color.red);
+        muteButton.setForeground(Color.WHITE);
+        muteButton.setBorder(BorderFactory.createRaisedBevelBorder());
+        muteButton.addActionListener(e -> {
+            if (!clip.isRunning()) {
+                playMusic();
+                muteButton.setText("Mute");
+                muteButton.setBackground(Color.RED);
+            } else {
+                stopMusic();
+                muteButton.setText("Unmute");
+                muteButton.setBackground(Color.GREEN);
+            }
+
+        });
+
         // Frame
         frame = new JFrame("Golden Pepperoni Pizza");
         frame.setSize(770, 600);
@@ -109,6 +171,8 @@ public class GameWindow {
         frame.add(topRightPanel);
         frame.add(bottomRightPanel);
         frame.add(navigationPanel);
+        frame.add(volumePanel);
+        frame.add(muteButton);
 
         // User entry
         entry = new JTextField();
@@ -199,6 +263,12 @@ public class GameWindow {
 
         frame.setLayout(null);
         frame.setVisible(true);
+    }
+
+    private void stateChanged(ChangeEvent e) {
+        volumeLabel.setText("Vol = " + volumeSlider.getValue());
+
+
     }
 
     // Display game map page
