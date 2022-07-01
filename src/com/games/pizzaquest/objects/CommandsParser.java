@@ -36,7 +36,7 @@ public class CommandsParser {
 
                 if (!nextLoc.equals("nothing")) {
                     gamestate.setPlayerLocation(PizzaQuestApp.getGameMap().get(nextLoc.toLowerCase()));
-                    String message = String.format("You travel %s to %s.\n", verb, noun) +
+                    String message = String.format("You travel %s to %s.\n", noun, gamestate.getPlayerLocation().getName()) +
                             ("\n" + gamestate.getPlayerLocation().getDescription());
                     window.getGameLabel().setText(message);
                 } else {
@@ -46,24 +46,9 @@ public class CommandsParser {
                     break;
                 }
 
+                increaseTurnCounter(gamestate);
                 window.getLocationLabel().setText(window.setLocationLabel(gamestate));
                 window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
-
-                if (gamestate.isGodMode()) {
-                    turns = 0;
-                }
-                else if (gamestate.getPlayer().getInventory().contains(new Item("moped"))){
-                    turns += 0.25;
-                    System.out.println(turns);
-                }
-                else if (gamestate.getPlayer().getInventory().contains(new Item("horse"))){
-                    turns += 0.50;
-                    System.out.println(turns);
-                }
-                else {
-                    turns += 1;
-                    System.out.println(turns);
-                }
 
                 break;
             case "look":
@@ -113,9 +98,9 @@ public class CommandsParser {
             case "talk":
                 //add item to inventory
                 talk(gamestate, noun);
-                String npcTalk = gamestate.getPlayerLocation().npc.getName();
+                String npcTalk = noun;
+                npcTalk = String.format("\n\nYou approach %s and start a conversation.\n\n", npcTalk);
                 if (npcTalk != null) {
-                    npcTalk = String.format("\n\nYou attempt to talk with %s.\n", npcTalk);
                     StringBuilder currentText = new StringBuilder(window.getGameLabel().getText());
                     currentText.append(npcTalk);
                     currentText.append(CommandsParser.talk(gamestate, verbAndNounList.get(1)));
@@ -195,10 +180,34 @@ public class CommandsParser {
             return playerLocation.npc.giveQuest();
         }
 
-        return String.format("There doesn't seem to be someone named \"%s\" here", noun);
+        return String.format("Wait a minute, there is no one name \"%s\" here. Who are you trying to talk to?", noun);
     }
 
     public static ArrayList<Item> getItemList() {
         return itemList;
     }
+
+    public static double getTurns() {
+        return turns;
+    }
+
+    public static int getReputation() {
+        return reputation;
+    }
+
+    private static void increaseTurnCounter(Gamestate gamestate){
+        if (gamestate.isGodMode()) {
+            turns = 0;
+        }
+        else if (gamestate.getPlayer().getInventory().contains(new Item("moped"))){
+            turns += 0.25;
+        }
+        else if (gamestate.getPlayer().getInventory().contains(new Item("horse"))){
+            turns += 0.50;
+        }
+        else {
+            turns += 1;
+        }
+    }
+
 }
