@@ -5,7 +5,7 @@
     "east": "nothing",
     "south": "rome",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT",
+    "description": "Welcome to Naples; Gateway to Italy...as far as this game is concerned. This is where you start your journey. Not a whole lot to do here. Feel free to chat up Caligula, he is very wise and may have some tips for you.",
     "xCoord" : 483,
     "yCoord" : 68
   },
@@ -15,7 +15,7 @@
     "west": "pompeii",
     "north": "naples",
     "south": "canals",
-    "description": "PLACE HOLDER TEXT",
+    "description": "The Capital of Italy. The colosseum is located here. Also found here, local legend Momma Mozzarella. You should talk to her while you are here, she may need your help.",
     "xCoord" : 483,
     "yCoord" : 232
   },
@@ -25,7 +25,7 @@
     "east": "rome",
     "north": "nothing",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT",
+    "description": "Pompeii was an ancient city located in what is now the commune of Pompeii near Naples in the Campania region of Italy. No one lives here anymore but for some reason a guy named Tony is here and covered in flour. Talk to him if you are feeling brave.",
     "xCoord" : 175,
     "yCoord" : 232
   },
@@ -35,7 +35,7 @@
     "east": "canals",
     "north": "pompeii",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT",
+    "description": "Trevi is an ancient town and commune in Umbria, Italy, on the lower flank of Monte Serano overlooking the wide plain of the Clitunno river system.",
     "xCoord" : 175,
     "yCoord" : 406
   },
@@ -45,7 +45,7 @@
     "east": "nothing",
     "south": "nothing",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT",
+    "description": "Fancy church. It is a town. Not much else.",
     "xCoord" : 195,
     "yCoord" : 574
   },
@@ -55,7 +55,7 @@
     "north": "rome",
     "west": "trevi",
     "south": "nothing",
-    "description": "PLACE HOLDER TEXT",
+    "description": "The lovely Venetian canals. Got those boats with guys drive it from the back with the long sticks. Enjoy your time!",
     "xCoord" : 483,
     "yCoord" : 408
   },
@@ -65,7 +65,7 @@
     "north": "tower",
     "south": "nothing",
     "east": "nothing",
-    "description": "PLACE HOLDER TEXT",
+    "description": "Amalfi is a town in a dramatic natural setting below steep cliffs on Italy’s southwest coast. Between the 9th and 11th centuries, it was the seat of a powerful maritime republic. Nowadays rich folk take extravagant vacations here.\n\nSome people tried to call it \"Almafi\". Because of this spelling, their GPS got confused and they crashed on their way here.",
     "xCoord" : 756,
     "yCoord" : 400
   },
@@ -75,7 +75,7 @@
     "south": "amalfi",
     "north": "nothing",
     "east": "nothing",
-    "description": "PLACE HOLDER TEXT",
+    "description": "The Leaning Tower of Pisa, or simply, the Tower of Pisa, is the campanile, or freestanding bell tower, of Pisa Cathedral. It is known for its nearly four-degree lean, the result of an unstable foundation. Don't get to close or it may fall on you!",
     "xCoord" : 756,
     "yCoord" : 232
   }

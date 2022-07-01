@@ -109,4 +109,21 @@ public class TextParserTest {
             Assert.assertEquals("quit", parsedText.get(0));
         }
     }
+
+    //God mode
+    @Test
+    public void textParser_ShouldReturnGod_WhenInputStringContainsGodSynonym() {
+        ArrayList<String> takeSynonym = new ArrayList<>(List.of("god mode"));
+        for (String synonym : takeSynonym) {
+            parsedText = (textParser.parse(synonym + " PLACEHOLDER"));
+            Assert.assertEquals("god", parsedText.get(0));
+        }
+    }
+
+    //Null test
+    @Test
+    public void textParser_ShouldReturnArrayListWithEmptyString_WhenInputStringIsNull(){
+        parsedText = textParser.parse(null);
+        Assert.assertEquals("", parsedText.get(0));
+    }
 }

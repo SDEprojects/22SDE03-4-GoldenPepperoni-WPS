@@ -9,7 +9,7 @@ import static com.games.pizzaquest.objects.MusicPlayer.*;
 
 public class CommandsParser {
     private static ArrayList<Item> itemList = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
-    private static int turns;
+    private static double turns;
     private static int reputation;
 
     public static boolean processCommands(List<String> verbAndNounList, Gamestate gamestate, GameWindow window) {
@@ -37,7 +37,7 @@ public class CommandsParser {
                 if (!nextLoc.equals("nothing")) {
                     gamestate.setPlayerLocation(PizzaQuestApp.getGameMap().get(nextLoc.toLowerCase()));
                     String message = String.format("You travel %s to %s.\n", verb, noun) +
-                            gamestate.getPlayerLocation().getDescription();
+                            ("\n" + gamestate.getPlayerLocation().getDescription());
                     window.getGameLabel().setText(message);
                 } else {
                     String message = window.getGameLabel().getText() +
@@ -52,8 +52,17 @@ public class CommandsParser {
                 if (gamestate.isGodMode()) {
                     turns = 0;
                 }
+                else if (gamestate.getPlayer().getInventory().contains(new Item("moped"))){
+                    turns += 0.25;
+                    System.out.println(turns);
+                }
+                else if (gamestate.getPlayer().getInventory().contains(new Item("horse"))){
+                    turns += 0.50;
+                    System.out.println(turns);
+                }
                 else {
                     turns += 1;
+                    System.out.println(turns);
                 }
 
                 break;
@@ -105,13 +114,19 @@ public class CommandsParser {
                 //add item to inventory
                 talk(gamestate, noun);
                 String npcTalk = gamestate.getPlayerLocation().npc.getName();
-                npcTalk = String.format("\n\nYou attempt to talk with %s.\n", npcTalk);
-                StringBuilder currentText = new StringBuilder(window.getGameLabel().getText());
-                currentText.append(npcTalk);
-                currentText.append(CommandsParser.talk(gamestate, verbAndNounList.get(1)));
-                window.getGameLabel().setText(currentText.toString());
+                if (npcTalk != null) {
+                    npcTalk = String.format("\n\nYou attempt to talk with %s.\n", npcTalk);
+                    StringBuilder currentText = new StringBuilder(window.getGameLabel().getText());
+                    currentText.append(npcTalk);
+                    currentText.append(CommandsParser.talk(gamestate, verbAndNounList.get(1)));
+                    window.getGameLabel().setText(currentText.toString());
+                }
+                else{
+                    window.getGameLabel().setText("Who is " + noun + "? They are not in this location. Are you okay?");
+                }
                 break;
             case "give":
+                System.out.println(verbAndNounList);
                 //removes item from inventory
                 if (noun.equals("")) {
                     validCommand = false;
@@ -159,7 +174,7 @@ public class CommandsParser {
                 break;
         }
         // Make a gameover check after the command is processed.
-        gamestate.checkGameOver(turns, reputation);
+        gamestate.checkGameOver((int) turns, reputation);
         return validCommand;
     }
 
