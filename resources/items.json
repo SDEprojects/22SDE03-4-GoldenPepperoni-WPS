@@ -70,6 +70,12 @@
     "type": "static",
     "room": "amalfi",
     "description": "\n\n Look at it. Beautiful sculpture of whatever your mind desires. Use your imagination!"
+  },
+  {
+    "name": "yellow rain jacket",
+    "type": "npc",
+    "room": "naples",
+    "description": "\n\n Keeps you save from the rain."
   }
 ]
 
