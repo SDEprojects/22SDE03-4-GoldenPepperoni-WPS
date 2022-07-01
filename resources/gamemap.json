@@ -5,7 +5,9 @@
     "east": "nothing",
     "south": "rome",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 483,
+    "yCoord" : 68
   },
   {
     "name": "rome",
@@ -13,7 +15,9 @@
     "west": "pompeii",
     "north": "naples",
     "south": "canals",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 483,
+    "yCoord" : 232
   },
   {
     "name": "pompeii",
@@ -21,7 +25,9 @@
     "east": "rome",
     "north": "nothing",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 175,
+    "yCoord" : 232
   },
   {
     "name": "trevi",
@@ -29,7 +35,9 @@
     "east": "canals",
     "north": "pompeii",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 175,
+    "yCoord" : 406
   },
   {
     "name": "cathedral",
@@ -37,7 +45,9 @@
     "east": "nothing",
     "south": "nothing",
     "west": "nothing",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 195,
+    "yCoord" : 574
   },
   {
     "name": "canals",
@@ -45,7 +55,9 @@
     "north": "rome",
     "west": "trevi",
     "south": "nothing",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 483,
+    "yCoord" : 408
   },
   {
     "name": "amalfi",
@@ -53,7 +65,9 @@
     "north": "tower",
     "south": "nothing",
     "east": "nothing",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 756,
+    "yCoord" : 400
   },
   {
     "name": "tower",
@@ -61,6 +75,8 @@
     "south": "amalfi",
     "north": "nothing",
     "east": "nothing",
-    "description": "PLACE HOLDER TEXT"
+    "description": "PLACE HOLDER TEXT",
+    "xCoord" : 756,
+    "yCoord" : 232
   }
 ]

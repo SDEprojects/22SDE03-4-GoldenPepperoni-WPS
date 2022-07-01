@@ -219,7 +219,7 @@ public class GameWindow {
         mapButton.setForeground(Color.WHITE);
         mapButton.addActionListener(e -> {
             try {
-                mapPage();
+                mapPage(gamestate);
             } catch (URISyntaxException ex) {
                 ex.printStackTrace();
             }
@@ -232,8 +232,8 @@ public class GameWindow {
         exitButton.setBounds(frame.getWidth() - 60, frame.getHeight() - 70, 40, 20);
         exitButton.setMargin(new Insets(2, 2, 3, 2));
         exitButton.addActionListener(e -> System.exit(0));
-        exitButton.setBackground(Color.DARK_GRAY);
-        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(Color.black);
+        exitButton.setForeground(Color.white);
         frame.add(exitButton);
 
         // Create Nav buttons
@@ -272,24 +272,43 @@ public class GameWindow {
     }
 
     // Display game map page
-    private void mapPage() throws URISyntaxException {
+    private void mapPage(Gamestate gamestate) throws URISyntaxException {
 
         ImageIcon mapPicture = new ImageIcon(Objects.requireNonNull(getClass().getResource("/gameMapPicture.png")));
         JLabel mapLabel = new JLabel();
 
         mapLabel.setIcon(mapPicture);
+        mapLabel.setBounds(0,0,849, 732);
         JDialog mapFrame = new JDialog();
         mapFrame.setModal(true);
+        mapFrame.setLayout(null);
 
-        mapFrame.add(mapLabel);
+
         mapFrame.pack();
 
-        mapFrame.setSize(900, 800);
+        mapFrame.setSize(849, 732);
         mapFrame.setResizable(true);
 
         mapFrame.setIconImage(logo.getImage());
         mapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        ImageIcon locationIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/look32.png")));
+
+        JLabel youAreHere = new JLabel();
+        youAreHere.setIcon(locationIcon);
+        youAreHere.setSize( 34, 34);
+        youAreHere.setLocation(getMapCoords(gamestate));
+        youAreHere.setVisible(true);
+
+        // Order of add matters for visibility.
+        mapFrame.add(youAreHere);
+        mapFrame.add(mapLabel);
+
         mapFrame.setVisible(true);
+    }
+
+    private Point getMapCoords(Gamestate gamestate) {
+        return gamestate.getPlayerLocation().getMapLocation();
     }
 
     public JTextArea getInventoryLabel() {

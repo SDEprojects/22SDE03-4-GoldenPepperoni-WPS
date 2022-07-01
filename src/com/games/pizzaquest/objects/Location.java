@@ -1,5 +1,6 @@
 package com.games.pizzaquest.objects;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Location {
@@ -8,21 +9,25 @@ public class Location {
     private final String east;
     private final String south;
     private final String west;
+    private final int xCoord;
+    private final int yCoord;
 
     private final String description;
     public NonPlayerCharacter npc = null;
     private ArrayList<Item> items;
 
-    public Location(String name, String north, String south, String east, String west, String description) {
+    public Location(String name, String north, String south, String east, String west, String description, int xCoord, int yCoord) {
         this.name = name;
         this.north = north;
         this.south = south;
         this.east = east;
         this.west = west;
         this.description = description;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
     }
 
-    public Location(String name, NonPlayerCharacter NPC, String north, String south, String east, String west, String description) {
+    public Location(String name, NonPlayerCharacter NPC, String north, String south, String east, String west, String description, int xCoord, int yCoord) {
         this.name = name;
         this.north = north;
         this.south = south;
@@ -30,6 +35,8 @@ public class Location {
         this.west = west;
         this.npc = NPC;
         this.description = description;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
     }
     public String getDescription() {
         return description;
@@ -114,4 +121,7 @@ public class Location {
         return "Location: " + getName() + ".\n\nExits:" + printBoarders();
     }
 
+    public Point getMapLocation() {
+        return new Point(xCoord, yCoord);
+    }
 }
