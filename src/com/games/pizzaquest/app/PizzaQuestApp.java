@@ -30,7 +30,7 @@ public class PizzaQuestApp {
         gamestate = new Gamestate(gameMap.get("naples"), player);
         gameWindow = new GameWindow(gamestate);
         gameWindow.getGameLabel().setText(welcomeMsg);
-        //playMusic();
+        playMusic();
     }
 
     public static void addItemsToLocationMap(Hashtable<String, Location> gameMap, List<Item> itemsList) {

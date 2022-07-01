@@ -112,7 +112,7 @@ public class GameWindow {
 
         // Volume Slider
         volumeLabel = new JLabel();
-        volumeSlider = new JSlider(0, 100, 40);
+        volumeSlider = new JSlider(0, 100, 100);
         volumeSlider.setPreferredSize(new Dimension(200, 200));
         volumeSlider.setPaintTicks(true);
         volumeSlider.setMinorTickSpacing(10);
@@ -267,8 +267,7 @@ public class GameWindow {
 
     private void stateChanged(ChangeEvent e) {
         volumeLabel.setText("Vol = " + volumeSlider.getValue());
-
-
+        MusicPlayer.setVolume(volumeSlider.getValue());
     }
 
     // Display game map page
