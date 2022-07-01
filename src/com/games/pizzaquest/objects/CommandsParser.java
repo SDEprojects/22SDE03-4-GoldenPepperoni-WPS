@@ -51,11 +51,9 @@ public class CommandsParser {
 
                 if (gamestate.isGodMode()) {
                     turns = 0;
-                    System.out.println(turns);
                 }
                 else {
                     turns += 1;
-                    System.out.println(turns);
                 }
 
                 break;
@@ -79,7 +77,7 @@ public class CommandsParser {
                         gamestate.getPlayer().addToInventory(noun);
                         itemFound = true;
                     }
-                    else if (gamestate.isGodMode() && itemList.contains(new Item(noun))){
+                    else if (gamestate.isGodMode() && itemList.contains(i)){
                         gamestate.getPlayer().addToInventory(noun);
                         itemFound = true;
                     }
@@ -148,7 +146,6 @@ public class CommandsParser {
                 break;
             case "god":
                 gamestate.setGodMode(true);
-                System.out.println("God mode on: " + gamestate.isGodMode());
                 break;
             default:
                 String response = String.format("\n\nI don't understand '%s'%n\n", verbAndNounList) +

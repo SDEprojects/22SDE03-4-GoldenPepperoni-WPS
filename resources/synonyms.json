@@ -8,5 +8,6 @@
   "talk": ["talk to", "speak", "speak to"],
   "mute": ["sound off", "music off"],
   "unmute": ["sound on", "music on"],
-  "god": ["god mode"]
+  "god": ["god mode"],
+  "volume": []
 }
