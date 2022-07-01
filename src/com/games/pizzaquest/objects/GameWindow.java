@@ -339,16 +339,19 @@ public class GameWindow {
     }
 
     public String setInventoryLabel(Gamestate gamestate) {
-        StringBuilder inventoryString = new StringBuilder("Items in inventory: \n");
-
+        StringBuilder inventoryString = new StringBuilder("Player Information: \n");
         Set<Item> playerItems = gamestate.getPlayer().getInventory();
 
+        inventoryString.append("  Turns taken: ").append(CommandsParser.getTurns()).append("/").append(gamestate.getTURN_LIMIT()).append("\n");
+        inventoryString.append("  Total Reputation: ").append(CommandsParser.getReputation()).append("/").append(gamestate.getWINNING_REPUTATION()).append("\n\n");
+        inventoryString.append("  Inventory:\n");
+
         if (playerItems.isEmpty()){
-            inventoryString.append("  EMPTY");
+            inventoryString.append("    EMPTY");
         }
         else {
             for (Item item : playerItems) {
-                inventoryString.append("  ").append(item.getName()).append("\n");
+                inventoryString.append("   -").append(item.getName()).append("\n");
             }
         }
 

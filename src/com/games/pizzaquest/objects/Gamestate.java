@@ -69,5 +69,11 @@ public class Gamestate {
         isGodMode = godMode;
     }
 
+    public int getTURN_LIMIT() {
+        return TURN_LIMIT;
+    }
 
+    public int getWINNING_REPUTATION() {
+        return WINNING_REPUTATION;
+    }
 }
