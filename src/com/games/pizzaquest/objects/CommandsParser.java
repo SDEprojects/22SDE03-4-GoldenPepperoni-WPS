@@ -37,7 +37,7 @@ public class CommandsParser {
                 if (!nextLoc.equals("nothing")) {
                     gamestate.setPlayerLocation(PizzaQuestApp.getGameMap().get(nextLoc.toLowerCase()));
                     String message = String.format("You travel %s to %s.\n", verb, noun) +
-                            ("\nYou see DESCRIPTION OF THE CURRENT LOCATION");
+                            gamestate.getPlayerLocation().getDescription();
                     window.getGameLabel().setText(message);
                 } else {
                     String message = window.getGameLabel().getText() +
