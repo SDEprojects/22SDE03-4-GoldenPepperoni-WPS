@@ -118,18 +118,22 @@ public class CommandsParser {
                     break;
                 }
                 if (gamestate.getPlayerLocation().npc != null) {
-                    reputation += gamestate.getPlayerLocation().npc.processItem(noun);
+                    int repAdd = gamestate.getPlayerLocation().npc.processItem(noun);
+                    if (repAdd > 0) {
+                        reputation += repAdd;
+                        gamestate.getPlayer().removeFromInventory(noun);
+                        window.getGameLabel().setText(window.getGameLabel().getText() +
+                                String.format("\n\nYou give the %s to %s. \nHe thanks you and your reputation increases!",
+                                              noun, gamestate.getPlayerLocation().npc.getName()));
+                    }
+                    else {
+                        window.getGameLabel().setText(window.getGameLabel().getText() +
+                              String.format("\n\n%s is uninterested with that item.", gamestate.getPlayerLocation().npc.getName()));
+                    }
                 }
-                gamestate.getPlayer().removeFromInventory(noun);
+
                 window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
                 break;
-            /*case "inventory":
-                Set<Item> tempInventory = gamestate.getPlayer().getInventory();
-                System.out.println("Items in the Inventory");
-                for (Item i : tempInventory) {
-                    System.out.println(i.getName());
-                }
-                break;*/
             case "help":
                     window.getGameLabel().setText(ExternalFileReader.gameInstructions(gamestate));
                 break;
