@@ -14,11 +14,12 @@ public class TextParser{
     Set<String> synonymKeys = synonyms.keySet();
 
     public List<String> parse(String userInput) {
+        List<String> parsedUserInput;
         //takes in user input and then splits it on the spaces. Logic comes later
         if (userInput == null){
-            userInput = "";
+            return new ArrayList<>(List.of(""));
         }
-        List<String> parsedUserInput = new ArrayList<>(Arrays.asList(userInput.trim().toLowerCase().split(" ")));
+        parsedUserInput = new ArrayList<>(Arrays.asList(userInput.trim().toLowerCase().split(" ")));
         parsedUserInput.removeIf(string -> string.equals(""));
         if (parsedUserInput.size() > 1) {
             String multiWordCommandOrNoun = parsedUserInput.get(0).concat(" " + parsedUserInput.get(1));
