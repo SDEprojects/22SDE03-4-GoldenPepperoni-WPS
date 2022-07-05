@@ -36,7 +36,7 @@ abstract public class ExternalFileReader {
         }
     }
 
-    public static ArrayList<NonPlayerCharacter> NpcGson() {
+    public static ArrayList<NonPlayerCharacter> npcGson() {
         // create Gson instance
         Gson gson = new Gson();
         ArrayList<NonPlayerCharacter> npcList = new ArrayList<>();
@@ -107,7 +107,7 @@ abstract public class ExternalFileReader {
         return foundItem;
     }
 
-    public static void GameTextGson() {
+    public static void gameTextGson() {
         Gson gson = new Gson();
         InputStream locationJSON = getFileFromResourceAsStream(textFilePath);
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(locationJSON, StandardCharsets.UTF_8))) {
