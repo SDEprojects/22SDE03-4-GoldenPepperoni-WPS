@@ -384,8 +384,6 @@ public class GameWindow {
         StringBuilder inventoryString = new StringBuilder("Player Information: \n");
         Set<Item> playerItems = gamestate.getPlayer().getInventory();
 
-        inventoryString.append("  Turns taken: ").append(CommandsParser.getTurns()).append("/").append(gamestate.getTURN_LIMIT()).append("\n");
-        inventoryString.append("  Total Reputation: ").append(CommandsParser.getReputation()).append("/").append(gamestate.getWINNING_REPUTATION()).append("\n\n");
         inventoryString.append("  Inventory:\n");
 
         if (playerItems.isEmpty()){
