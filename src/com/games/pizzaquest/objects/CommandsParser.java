@@ -167,14 +167,7 @@ public class CommandsParser {
         System.exit(0);
     }
 
-//    private static void resetGame() {
-//        PizzaQuestApp resetGame = new PizzaQuestApp();
-//        setGameOver(true);
-//        turns = 0;
-//        resetGame.execute();
-//    }
-
-    public static String talk(Gamestate gamestate, String noun) {
+    private static String talk(Gamestate gamestate, String noun) {
         Location playerLocation = gamestate.getPlayerLocation();
         if (playerLocation.npc != null && playerLocation.npc.getName().equals(noun)) {
             return playerLocation.npc.giveQuest();

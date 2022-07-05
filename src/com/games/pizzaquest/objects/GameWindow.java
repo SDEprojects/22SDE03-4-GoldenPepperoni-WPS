@@ -377,20 +377,6 @@ public class GameWindow {
             gameText.setText("PLACEHOLDER YOU WIN MESSAGE");
         }
     }
-    private File getFileFromResource(String fileName) throws URISyntaxException {
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource(fileName);
-        if (resource == null) {
-            throw new IllegalArgumentException("file not found! " + fileName);
-        } else {
-
-            // failed if files have whitespaces or special characters
-            //return new File(resource.getFile());
-
-            return new File(resource.toURI());
-        }
-    }
 
     private JButton createNavButton(String name, String target, Gamestate game, GameWindow window) {
         List<String> commandParsed = parser.parse(target);
