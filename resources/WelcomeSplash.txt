@@ -11,7 +11,7 @@ Welcome to pizza quest where you're trying to become the golden pepperoni.
 Pizza Quest is an adventure game where you travel around Italy completing quests in order build reputation. Do not dilly-dally though! You only have a certain number of days to get the reputation required to win!
 
 ----------------------- Tips -----------------------
--> Type "look" to display more information about your current location.
+-> Type "look" or click the location button in the center of the move pad to display more information about your current location.
 -> "Look" can also be used on items and NPCs as well!
 -> Type "help" anytime to display commands
 ----------------------------------------------------
