@@ -47,6 +47,7 @@ public class CommandsParser {
                 }
 
                 increaseTurnCounter(gamestate);
+                window.updateTimeRemaining(turns);
                 window.getLocationLabel().setText(window.setLocationLabel(gamestate));
                 window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
 
