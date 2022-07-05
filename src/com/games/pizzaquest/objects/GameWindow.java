@@ -5,6 +5,7 @@ import com.games.pizzaquest.textparser.TextParser;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -45,6 +46,7 @@ public class GameWindow {
     private final JPanel volumePanel;
     private final JLabel volumeLabel;
     private final JSlider volumeSlider;
+    private final JProgressBar reputationBar;
     private final JButton muteButton;
 //    private final JButton unmuteButton;
     private final JPanel sliderPanel;
@@ -77,8 +79,20 @@ public class GameWindow {
         inventoryText = new JTextArea(String.valueOf(setInventoryLabel(gamestate)));
         inventoryText.setEditable(false);
         inventoryText.setOpaque(false);
-        inventoryText.setBorder(BorderFactory.createLineBorder(Color.black));
-        inventoryText.setBounds(420, 210, 200, 190);
+        //inventoryText.setBorder(BorderFactory.createLineBorder(Color.black));
+        inventoryText.setBounds(420, 210, 200, 230);
+
+        // Reputation bar
+        reputationBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, 100);
+        reputationBar.setString("REPUTATION");
+        reputationBar.setValue(0);
+        reputationBar.setStringPainted(true);
+        reputationBar.setSize(200, 40);
+        reputationBar.setForeground(new Color(102, 0, 102));
+        reputationBar.setUI(new BasicProgressBarUI() {
+            protected Color getSelectionBackground() { return Color.black; }
+            protected Color getSelectionForeground() { return Color.white; }
+        });
 
         // Main Panel = Big Left Panel
         mainPanel = new JPanel();
@@ -101,9 +115,10 @@ public class GameWindow {
         bottomRightPanel = new JPanel();
         bottomRightPanel.setBackground(Color.orange);
         bottomRightPanel.setBounds(420, 255, 230, 245);
-        bottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        bottomRightPanel.setLayout(new GridLayout(0, 1));
-        bottomRightPanel.add(inventoryText);
+        bottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+        bottomRightPanel.setLayout(new BorderLayout(2, 2));
+        bottomRightPanel.add(inventoryText, BorderLayout.NORTH);
+        bottomRightPanel.add(reputationBar, BorderLayout.SOUTH);
 
         // Navigation Panel
         navigationPanel = new JPanel();
@@ -398,5 +413,9 @@ public class GameWindow {
         button.setBackground(Color.DARK_GRAY);
         button.setForeground(Color.WHITE);
         return button;
+    }
+
+    public void updateReputation(int reputation) {
+        reputationBar.setValue((int)(100.0 * reputation / Gamestate.WINNING_REPUTATION));
     }
 }
