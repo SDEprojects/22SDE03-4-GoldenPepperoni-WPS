@@ -120,6 +120,7 @@ public class CommandsParser {
                     int repAdd = gamestate.getPlayerLocation().npc.processItem(noun);
                     if (repAdd > 0) {
                         reputation += repAdd;
+                        window.updateReputation(reputation);
                         gamestate.getPlayer().removeFromInventory(noun);
                         window.getGameLabel().setText(window.getGameLabel().getText() +
                                 String.format("\n\nYou give the %s to %s. \nThey thank you and your reputation increases!",

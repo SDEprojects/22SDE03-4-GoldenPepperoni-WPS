@@ -5,8 +5,8 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class Gamestate {
-    private final int WINNING_REPUTATION = 100;
-    private final int TURN_LIMIT = 15;
+    public static final int WINNING_REPUTATION = 100;
+    public static final int TURN_LIMIT = 15;
     private final Hashtable<String, Location> gameMap = hashNewMap(ExternalFileReader.getLocationListFromJson());
     private Location playerLocation;
     private Player player;
@@ -69,11 +69,11 @@ public class Gamestate {
         isGodMode = godMode;
     }
 
-    public int getTURN_LIMIT() {
+    public static int getTURN_LIMIT() {
         return TURN_LIMIT;
     }
 
-    public int getWINNING_REPUTATION() {
+    public static int getWINNING_REPUTATION() {
         return WINNING_REPUTATION;
     }
 }
