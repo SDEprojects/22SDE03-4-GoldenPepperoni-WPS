@@ -145,7 +145,7 @@ public class CommandsParser {
                 break;
             case "unmute":
                 if(!clip.isRunning()){
-                    playMusic();
+                    playMusic(window.getCurrentVolume());
                 }
                 break;
             case "god":

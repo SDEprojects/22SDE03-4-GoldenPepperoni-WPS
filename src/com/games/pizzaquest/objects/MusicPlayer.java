@@ -11,20 +11,24 @@ public class MusicPlayer {
     static final String filename = "/music/Tarantella.wav";
     static Clip clip = null;
 
-    public static void playMusic(){
+    public static void playMusic(int volume){
 
         try (InputStream in = MusicPlayer.class.getResourceAsStream(filename)){
             InputStream bufferedIn = new BufferedInputStream(in);
             try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(bufferedIn)){
                 clip = AudioSystem.getClip();
                 clip.open(audioIn);
+                setVolume(volume);
                 clip.loop(Clip.LOOP_CONTINUOUSLY); // Plays music continuously
             }
         }catch (Exception e){
             System.out.println("Music file not found!!!");
         }
     }
-
+    public float getVolume() {
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        return (float) Math.pow(10f, gainControl.getValue() / 20f);
+    }
 
     public static void setVolume(float volume) {
         volume *= 0.01;
