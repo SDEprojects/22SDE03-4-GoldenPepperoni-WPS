@@ -429,10 +429,15 @@ public class GameWindow {
         JButton button = new JButton(name);
         button.setSize(NAV_WIDTH, NAV_HEIGHT);
         button.setMargin(new Insets(2, 2, 2, 2));
-        button.addActionListener(e -> CommandsParser.processCommands(commandParsed, game, window));
+        button.addActionListener(e -> navButtonPress(commandParsed, game, window));
         button.setBackground(Color.DARK_GRAY);
         button.setForeground(Color.WHITE);
         return button;
+    }
+
+    private void navButtonPress(List<String> commandParsed, Gamestate gamestate, GameWindow window) {
+        CommandsParser.processCommands(commandParsed, gamestate, window);
+        processGameOver(gamestate.getGameOver());
     }
 
     public void updateReputation(int reputation) {
