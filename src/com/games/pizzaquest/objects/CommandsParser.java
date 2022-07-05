@@ -111,25 +111,30 @@ public class CommandsParser {
                 }
                 break;
             case "give":
-                System.out.println(verbAndNounList);
                 //removes item from inventory
                 if (noun.equals("")) {
                     validCommand = false;
                     break;
                 }
-                if (gamestate.getPlayerLocation().npc != null) {
+                if (gamestate.getPlayerLocation().npc != null && gamestate.getPlayer().getInventory().contains(new Item(noun))) {
                     int repAdd = gamestate.getPlayerLocation().npc.processItem(noun);
                     if (repAdd > 0) {
                         reputation += repAdd;
                         gamestate.getPlayer().removeFromInventory(noun);
                         window.getGameLabel().setText(window.getGameLabel().getText() +
-                                String.format("\n\nYou give the %s to %s. \nHe thanks you and your reputation increases!",
+                                String.format("\n\nYou give the %s to %s. \nThey thank you and your reputation increases!",
                                               noun, gamestate.getPlayerLocation().npc.getName()));
                     }
                     else {
                         window.getGameLabel().setText(window.getGameLabel().getText() +
                               String.format("\n\n%s is uninterested with that item.", gamestate.getPlayerLocation().npc.getName()));
                     }
+
+                }
+                else{
+                    window.getGameLabel().setText(window.getGameLabel().getText() +
+                            String.format("\n\n%s is not in your inventory therefore you cannot give it away!",
+                                    noun));
                 }
 
                 window.getInventoryLabel().setText(window.setInventoryLabel(gamestate));
