@@ -21,9 +21,9 @@ public class PizzaQuestApp {
     public void execute() {
         //temporary setting of description for npc
         //temporarily put in a 1 iteration loop to test user input
-        npcList = ExternalFileReader.NpcGson();
+        npcList = ExternalFileReader.npcGson();
         setNPC();
-        ExternalFileReader.GameTextGson();
+        ExternalFileReader.gameTextGson();
         //itemsList = ExternalFileReader.getItemListFromJson();
         addItemsToLocationMap(gameMap, itemsList);
 
