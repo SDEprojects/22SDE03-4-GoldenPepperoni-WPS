@@ -20,6 +20,7 @@ public class GameWindow {
     private final Font FIELD_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
     private final int NAV_WIDTH = 22;
     private final int NAV_HEIGHT = 22;
+    private final int PROGRESS_BAR_MAX = Gamestate.TURN_LIMIT * 100;
     private int currentVolume = 100;
 
     private static final TextParser parser = new TextParser();
@@ -45,6 +46,7 @@ public class GameWindow {
     private final JLabel volumeLabel;
     private final JSlider volumeSlider;
     private final JProgressBar reputationBar;
+    private final JProgressBar timeBar;
     private final JButton muteButton;
 //    private final JButton unmuteButton;
     private final JPanel sliderPanel;
@@ -79,19 +81,36 @@ public class GameWindow {
         inventoryText.setEditable(false);
         inventoryText.setOpaque(false);
         //inventoryText.setBorder(BorderFactory.createLineBorder(Color.black));
-        inventoryText.setBounds(420, 210, 200, 230);
+        inventoryText.setBounds(420, 210, 200, 210);
 
         // Reputation bar
         reputationBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, 100);
         reputationBar.setString("REPUTATION");
         reputationBar.setValue(0);
         reputationBar.setStringPainted(true);
-        reputationBar.setSize(200, 40);
+        reputationBar.setSize(200, 20);
         reputationBar.setForeground(new Color(102, 0, 102));
         reputationBar.setUI(new BasicProgressBarUI() {
             protected Color getSelectionBackground() { return Color.black; }
             protected Color getSelectionForeground() { return Color.white; }
         });
+
+        // Time bar
+        timeBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, PROGRESS_BAR_MAX);
+        timeBar.setString("TIME REMAINING");
+        timeBar.setValue(PROGRESS_BAR_MAX);
+        timeBar.setStringPainted(true);
+        timeBar.setSize(200, 20);
+        timeBar.setForeground(Color.green);
+        timeBar.setUI(new BasicProgressBarUI() {
+            protected Color getSelectionBackground() { return Color.black; }
+            protected Color getSelectionForeground() { return Color.black; }
+        });
+
+        JPanel barPanel = new JPanel();
+        barPanel.setLayout(new BorderLayout(0, 0));
+        barPanel.add(timeBar, BorderLayout.NORTH);
+        barPanel.add(reputationBar, BorderLayout.SOUTH);
 
         // Main Panel = Big Left Panel
         mainPanel = new JPanel();
@@ -117,7 +136,7 @@ public class GameWindow {
         bottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         bottomRightPanel.setLayout(new BorderLayout(2, 2));
         bottomRightPanel.add(inventoryText, BorderLayout.NORTH);
-        bottomRightPanel.add(reputationBar, BorderLayout.SOUTH);
+        bottomRightPanel.add(barPanel, BorderLayout.SOUTH);
 
         // Navigation Panel
         navigationPanel = new JPanel();
@@ -418,5 +437,25 @@ public class GameWindow {
 
     public void updateReputation(int reputation) {
         reputationBar.setValue((int)(100.0 * reputation / Gamestate.WINNING_REPUTATION));
+    }
+
+    public void updateTimeRemaining(double turns) {
+        // Set convert turns to inverted value and set progress bar.
+        double percentageDbl = PROGRESS_BAR_MAX - (turns * 100);
+        timeBar.setValue((int)(percentageDbl));
+
+        // Convert to percentage of bar and set colors.
+        percentageDbl = percentageDbl / PROGRESS_BAR_MAX * 100;
+
+        if (percentageDbl <= 60.0 && percentageDbl > 30.0) {
+            timeBar.setForeground(Color.yellow);
+        }
+        else if (percentageDbl <= 30.0) {
+            timeBar.setForeground(Color.red);
+            timeBar.setUI(new BasicProgressBarUI() {
+                protected Color getSelectionBackground() { return Color.red; }
+                protected Color getSelectionForeground() { return Color.white; }
+            });
+        }
     }
 }
