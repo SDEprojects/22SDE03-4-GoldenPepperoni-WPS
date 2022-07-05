@@ -5,6 +5,7 @@ import com.games.pizzaquest.objects.*;
 import java.util.*;
 
 import static com.games.pizzaquest.objects.MusicPlayer.playMusic;
+import static com.games.pizzaquest.objects.MusicPlayer.setVolume;
 
 public class PizzaQuestApp {
     private static final Hashtable<String, Location> gameMap = Gamestate.hashNewMap(ExternalFileReader.getLocationListFromJson());
@@ -30,7 +31,7 @@ public class PizzaQuestApp {
         gamestate = new Gamestate(gameMap.get("naples"), player);
         gameWindow = new GameWindow(gamestate);
         gameWindow.getGameLabel().setText(welcomeMsg);
-        playMusic();
+        playMusic(gameWindow.getCurrentVolume());
     }
 
     public static void addItemsToLocationMap(Hashtable<String, Location> gameMap, List<Item> itemsList) {

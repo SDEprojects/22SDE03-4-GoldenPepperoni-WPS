@@ -21,6 +21,7 @@ public class GameWindow {
     private final Font FIELD_FONT = new Font(Font.MONOSPACED, Font.PLAIN, 12);
     private final int NAV_WIDTH = 22;
     private final int NAV_HEIGHT = 22;
+    private int currentVolume = 100;
 
     private static final TextParser parser = new TextParser();
     private static JTextArea gameText;
@@ -151,13 +152,18 @@ public class GameWindow {
         muteButton.setBorder(BorderFactory.createRaisedBevelBorder());
         muteButton.addActionListener(e -> {
             if (!clip.isRunning()) {
-                playMusic();
+                volumeLabel.setText("Vol = " + getCurrentVolume());
+                volumeSlider.setEnabled(true);
+                playMusic(getCurrentVolume());
                 muteButton.setText("Mute");
                 muteButton.setBackground(Color.RED);
             } else {
+                currentVolume = volumeSlider.getValue();
                 stopMusic();
                 muteButton.setText("Unmute");
                 muteButton.setBackground(Color.GREEN);
+                volumeSlider.setEnabled(false);
+                volumeLabel.setText("Muted");
             }
 
         });
@@ -319,6 +325,10 @@ public class GameWindow {
         errorLabel.setVisible(!CommandsParser.processCommands(commandParsed, gamestate, gameWindow));
         processGameOver(gamestate.getGameOver());
         entry.setText(null);
+    }
+
+    public int getCurrentVolume() {
+        return currentVolume;
     }
 
     public JTextArea getGameLabel() {
