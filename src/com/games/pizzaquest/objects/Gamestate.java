@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Gamestate {
     public static final int WINNING_REPUTATION = 100;
-    public static final int TURN_LIMIT = 3;
+    public static final int TURN_LIMIT = 15;
     private final Hashtable<String, Location> gameMap = hashNewMap(ExternalFileReader.getLocationListFromJson());
     private Location playerLocation;
     private Player player;
