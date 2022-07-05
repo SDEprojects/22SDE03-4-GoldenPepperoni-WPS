@@ -17,6 +17,8 @@ abstract public class ExternalFileReader {
     private static final String textFilePath = "instructions.json";
     private static final String itemFilePath = "items.json";
     private static final String bannerFilePath = "WelcomeSplash.txt";
+    private static final String youWinFilePath = "YouWin.txt";
+    private static final String youLoseFilePath = "YouLose.txt";
     private static final Type locationListType = new TypeToken<ArrayList<Location>>() {
     }.getType();
     private static final Type itemListType = new TypeToken<List<Item>>() {
@@ -127,6 +129,38 @@ abstract public class ExternalFileReader {
         StringBuilder textBuilder = new StringBuilder();
         try (Reader reader = new BufferedReader(new InputStreamReader
                 (welcomeSplash, Charset.forName(StandardCharsets.UTF_8.name())))) {
+            int c = 0;
+            while ((c = reader.read()) != -1) {
+                textBuilder.append((char) c);
+            }
+            return textBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return textBuilder.toString();
+    }
+
+    public static String youWin() {
+        InputStream youWinSplash = getFileFromResourceAsStream(youWinFilePath);
+        StringBuilder textBuilder = new StringBuilder();
+        try (Reader reader = new BufferedReader(new InputStreamReader
+                (youWinSplash, Charset.forName(StandardCharsets.UTF_8.name())))) {
+            int c = 0;
+            while ((c = reader.read()) != -1) {
+                textBuilder.append((char) c);
+            }
+            return textBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return textBuilder.toString();
+    }
+
+    public static String youLose() {
+        InputStream youLoseSplash = getFileFromResourceAsStream(youLoseFilePath);
+        StringBuilder textBuilder = new StringBuilder();
+        try (Reader reader = new BufferedReader(new InputStreamReader
+                (youLoseSplash, Charset.forName(StandardCharsets.UTF_8.name())))) {
             int c = 0;
             while ((c = reader.read()) != -1) {
                 textBuilder.append((char) c);

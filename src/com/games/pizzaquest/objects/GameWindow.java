@@ -9,9 +9,7 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.io.File;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -53,6 +51,7 @@ public class GameWindow {
     private final JPanel mutePanel;
     private PizzaQuestApp app;
     ImageIcon logo = new ImageIcon("roundPizza.jpg");
+    private GameWindow gameWindow;
 
 //    ImageIcon mapPicture;
 //    JLabel mapLabel;
@@ -396,10 +395,12 @@ public class GameWindow {
         }
 
         if (gameOverValue == -1) {
-            gameText.setText("PLACEHOLDER YOU LOSE MESSAGE");
+            String youLoseMsg = ExternalFileReader.youLose();
+            gameText.setText(youLoseMsg);
         }
         else {
-            gameText.setText("PLACEHOLDER YOU WIN MESSAGE");
+            String youWinMsg = ExternalFileReader.youWin();
+            gameText.setText(youWinMsg);
         }
     }
 
