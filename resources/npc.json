@@ -1,34 +1,34 @@
 {
   "mike": [
-    "Mikes quest text",
-    "",
-    "",
-    "",
-    ""
+    "I forgot to bring something to drink at work.",
+    "amalfi",
+    "Mike looks half awake and could use a pick-me-up.",
+    "25",
+    "espresso"
   ],
   "herman": [
-    "Herman's quest text",
-    "",
-    "",
-    "",
-    ""
+    "Herman looks hangry and is carrying some brown pouches.",
+    "canals",
+    "I need a rock or something to lean my pouches against! (You get the feeling what he really needs the instructions on how to cook his food)",
+    "25",
+    "cookbook"
   ],
   "tony": [
     "I need the golden elixir of life",
     "pompeii",
-    "Tony is covered in flour and wants to talk to you!",
-    "20",
+    "Tony is covered in flour and looks exited!",
+    "25",
     "olive oil"
   ],
   "momma mozzarella": [
     "I want something to throw in the fountain",
     "rome",
     "A woman who sells the best mootz",
-    "20",
+    "25",
     "coin"
   ],
   "caligula": [
-    "Your quest should you choose to follow it is to \n talk to the townspeople and give them what they are looking for",
+    "Your quest, should you choose to follow it, is to talk \nto the townspeople and give them what they are looking for.",
     "naples",
     "Caligula is a crazy emperor but, He has information for you",
     "0",

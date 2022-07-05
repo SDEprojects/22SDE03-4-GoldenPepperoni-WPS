@@ -4,67 +4,60 @@ import com.games.pizzaquest.objects.ExternalFileReader;
 
 import java.util.*;
 
-public class TextParser {
+public class TextParser{
     /*
     A class that is designed to take in user input and call other function depending on
     what the user types.
          */
-    String currentInput = "";
+
     Map<String, ArrayList<String>> synonyms = ExternalFileReader.getSynonymListFromJson();
     Set<String> synonymKeys = synonyms.keySet();
 
     public List<String> parse(String userInput) {
-        currentInput = userInput;
+        List<String> parsedUserInput;
         //takes in user input and then splits it on the spaces. Logic comes later
-        List<String> parsedUserInput = new ArrayList<>(Arrays.asList(userInput.toLowerCase().split(" ")));
-        //after we break up the user input send it to be process
-        if (parsedUserInput.size() == 3) {
-            String multiWordCommandOrNoun = parsedUserInput.get(0).concat(" " + parsedUserInput.get(1));
-            for (String key : synonymKeys){
-                if (synonyms.get(key).contains(multiWordCommandOrNoun)){
-                    return formatTwoWordActionSingleWordNounCommand(parsedUserInput);
-                }
-            }
-            formatOneWordActionMultiWordNounCommand(parsedUserInput);
+        if (userInput == null){
+            return new ArrayList<>(List.of(""));
         }
-        else if(parsedUserInput.size() >= 4){
-            formatTwoWordActionMultiWordNounCommand(parsedUserInput);
-        }
-        else if (parsedUserInput.size() == 2){
+        parsedUserInput = new ArrayList<>(Arrays.asList(userInput.trim().toLowerCase().split(" ")));
+        parsedUserInput.removeIf(string -> string.equals(""));
+        if (parsedUserInput.size() > 1) {
             String multiWordCommandOrNoun = parsedUserInput.get(0).concat(" " + parsedUserInput.get(1));
-            for (String key : synonymKeys){
-                if (synonyms.get(key).contains(multiWordCommandOrNoun)){
-                    parsedUserInput.set(0,key);
-                    parsedUserInput.remove(1);
+            for (String key : synonymKeys) {
+                if (synonyms.get(key).contains(multiWordCommandOrNoun)) {
+                    parsedUserInput.set(0, key);
+                    if (parsedUserInput.size() > 2) {
+                        parsedUserInput.remove(1);
+                    }
+                    parsedUserInput.set(1,formatMultiWordNoun(parsedUserInput));
+                    trimUserInputList(parsedUserInput);
                     return parsedUserInput;
                 }
             }
+            parsedUserInput.set(0,getCommandFromSynonym(parsedUserInput.get(0)));
+            parsedUserInput.set(1, formatMultiWordNoun(parsedUserInput));
+        }
+        else{
             parsedUserInput.set(0, getCommandFromSynonym(parsedUserInput.get(0)));
         }
+
+        //after we break up the user input send it to be process
+        trimUserInputList(parsedUserInput);
         return parsedUserInput;
     }
 
-    private void formatOneWordActionMultiWordNounCommand(List<String> rawInput){
-        String formattedNoun = rawInput.get(1).concat(" " + rawInput.get(2));
-        rawInput.set(0, getCommandFromSynonym(rawInput.get(0)));
-        rawInput.set(1, getCommandFromSynonym(formattedNoun));
-        rawInput.remove(2);
+    private String formatMultiWordNoun(List<String> multiWordNoun){
+        String formattedNoun = "";
+        for (int i = 1; i < multiWordNoun.size(); i++) {
+            formattedNoun = formattedNoun.concat(multiWordNoun.get(i) + " ");
+        }
+        return formattedNoun.trim();
     }
-    private void formatTwoWordActionMultiWordNounCommand(List<String> rawInput){
-        String formattedAction = rawInput.get(0).concat(" " + rawInput.get(1));
-        String formattedNoun = rawInput.get(2).concat(" " + rawInput.get(3));
 
-        rawInput.set(0, getCommandFromSynonym(formattedAction));
-        rawInput.set(1, formattedNoun);
-        rawInput.remove(3);
-        rawInput.remove(2);
-    }
-    private List<String> formatTwoWordActionSingleWordNounCommand(List<String> rawInput){
-        String formattedAction = rawInput.get(0).concat(" " + rawInput.get(1));
-        rawInput.set(0, getCommandFromSynonym(formattedAction));
-        rawInput.remove(1);
-
-        return rawInput;
+    private void trimUserInputList(List<String> listOverTwoElements){
+        while (listOverTwoElements.size() > 2){
+            listOverTwoElements.remove(listOverTwoElements.size()-1);
+        }
     }
 
     private String getCommandFromSynonym(String userInput){
@@ -76,4 +69,5 @@ public class TextParser {
         }
         return inputSynonym;
     }
+
 }

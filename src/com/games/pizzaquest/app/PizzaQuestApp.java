@@ -20,9 +20,9 @@ public class PizzaQuestApp {
     public void execute() {
         //temporary setting of description for npc
         //temporarily put in a 1 iteration loop to test user input
-        npcList = ExternalFileReader.NpcGson();
+        npcList = ExternalFileReader.npcGson();
         setNPC();
-        ExternalFileReader.GameTextGson();
+        ExternalFileReader.gameTextGson();
         //itemsList = ExternalFileReader.getItemListFromJson();
         addItemsToLocationMap(gameMap, itemsList);
 
@@ -30,7 +30,7 @@ public class PizzaQuestApp {
         gamestate = new Gamestate(gameMap.get("naples"), player);
         gameWindow = new GameWindow(gamestate);
         gameWindow.getGameLabel().setText(welcomeMsg);
-        playMusic();
+        playMusic(gameWindow.getCurrentVolume());
     }
 
     public static void addItemsToLocationMap(Hashtable<String, Location> gameMap, List<Item> itemsList) {

@@ -9,7 +9,7 @@
     "name": "moped",
     "type": "vehicle",
     "room": "cathedral",
-    "description": "\n\n Part motorcycle, part bicycle, pure Italy"
+    "description": "\n\n Part motorcycle, part bicycle, pure Italy. Reduces travel time by 75%!"
   },
   {
     "name": "espresso",
@@ -27,7 +27,7 @@
     "name": "horse",
     "type": "vehicle",
     "room": "tower",
-    "description": "\n\n Four legged animal. Likes carrots. Giddy up!"
+    "description": "\n\n Four legged animal that allows you to cut travel time in half. Likes carrots. Giddy up! "
   },
   {
     "name": "coin",
@@ -57,7 +57,7 @@
     "name": "olive oil",
     "type": "npc",
     "room": "naples",
-    "description": "\n\n Oil made from olives. Ingredient used in many dishes."
+    "description": "\n\n Oil made from olives. Ingredient used in many dishes. Some call it the elixir of life."
   },
   {
     "name": "pizza cutter",
@@ -70,6 +70,12 @@
     "type": "static",
     "room": "amalfi",
     "description": "\n\n Look at it. Beautiful sculpture of whatever your mind desires. Use your imagination!"
+  },
+  {
+    "name": "yellow rain jacket",
+    "type": "npc",
+    "room": "naples",
+    "description": "\n\n Keeps you safe from the rain."
   }
 ]
 
