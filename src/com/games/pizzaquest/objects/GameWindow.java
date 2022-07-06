@@ -60,6 +60,7 @@ public class GameWindow {
 
     public GameWindow(Gamestate gamestate) {
         // Game text
+        setLookAndFeel();
         gameText = new JTextArea("This is the game field");
         gameText.setEditable(false);
         gameText.setOpaque(false);
@@ -190,11 +191,13 @@ public class GameWindow {
                 playMusic(getCurrentVolume());
                 muteButton.setText("Mute");
                 muteButton.setBackground(Color.RED);
+                muteButton.setForeground(Color.WHITE);
             } else {
                 currentVolume = volumeSlider.getValue();
                 stopMusic();
                 muteButton.setText("Unmute");
                 muteButton.setBackground(Color.GREEN);
+                muteButton.setForeground(Color.BLACK);
                 volumeSlider.setEnabled(false);
                 volumeLabel.setText("Muted");
             }
@@ -423,7 +426,7 @@ public class GameWindow {
 
     private JButton createNavButton(String name, String target, Gamestate game, GameWindow window) {
         List<String> commandParsed = parser.parse(target);
-
+        //setLookAndFeel();
         JButton button = new JButton(name);
         button.setSize(NAV_WIDTH, NAV_HEIGHT);
         button.setMargin(new Insets(2, 2, 2, 2));
@@ -459,6 +462,17 @@ public class GameWindow {
                 protected Color getSelectionBackground() { return Color.red; }
                 protected Color getSelectionForeground() { return Color.white; }
             });
+        }
+    }
+
+    public void setLookAndFeel(){
+        try {
+            // Set cross-platform Java L&F (also called "Metal")
+            UIManager.setLookAndFeel(
+                    UIManager.getCrossPlatformLookAndFeelClassName());
+        }
+        catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            System.out.println("Look and Feel Error \n" + e.getLocalizedMessage());
         }
     }
 }

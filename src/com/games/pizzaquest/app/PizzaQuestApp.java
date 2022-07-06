@@ -29,6 +29,7 @@ public class PizzaQuestApp {
         String welcomeMsg = ExternalFileReader.welcome();
         gamestate = new Gamestate(gameMap.get("naples"), player);
         gameWindow = new GameWindow(gamestate);
+        gameWindow.setLookAndFeel();
         gameWindow.getGameLabel().setText(welcomeMsg);
         playMusic(gameWindow.getCurrentVolume());
     }
