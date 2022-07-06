@@ -16,13 +16,13 @@ public class GameTexts {
     // Create a method that will print all the GameText in the ArrayList
     public String displayCommands(Gamestate gamestate) {
         StringBuilder commands = new StringBuilder();
-        commands.append("------------------------Game Help------------------------\n\n");
+        commands.append("----------------------- Game Help -----------------------\n\n");
         for (GameText gt : texts) {
             commands.append(gt.printHelp());
         }
 
         if (gamestate.isGodMode()){
-            commands.append("----------------------God Mode Help----------------------\n\n");
+            commands.append("--------------------- God Mode Help ---------------------\n\n");
             commands.append("God Mode allows you to take any item in the game regardless of where you are and you get unlimited moves!\n\n");
             commands.append("\t\tAvailable Items in God Mode\n");
             ArrayList<Item> allItems = (ArrayList<Item>) ExternalFileReader.getItemListFromJson();
